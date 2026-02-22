@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AvatarUpload from '../../components/AvatarUpload';
-import { maskPhone, unmask } from '../../utils/masks';
-import { 
-  ArrowLeft, Save, User, Mail, Phone, Calendar, 
+import { maskPhone } from '../../utils/masks';
+import {
+  ArrowLeft, Save, User,
   MapPin, BookOpen, Users, Award, X
 } from 'lucide-react';
 
@@ -19,8 +19,8 @@ export default function PerfilAluno() {
     nomeCompleto: 'João Silva',
     email: 'joao.silva@email.com',
     celular: '(11) 98765-4321',
-    dataNascimento: '15/05/2012',
-    
+    dataNascimento: '2012-05-15', // Alterado para formato YYYY-MM-DD para input date
+
     // Dados Escolares
     serie: '6º ano',
     turma: '6º Ano A',
@@ -28,25 +28,25 @@ export default function PerfilAluno() {
     matricula: '2025001',
     responsavel: 'Carlos Silva',
     telefoneResponsavel: '(11) 99876-5432',
-    
+
     // Localização
     endereco: 'Rua das Flores, 123',
     cidade: 'São Paulo',
     estado: 'SP',
     cep: '01234-567',
-    
+
     // Interesses
     interesses: ['Matemática', 'Ciências', 'Tecnologia']
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     let formattedValue = value;
     if (name === 'celular' || name === 'telefoneResponsavel') {
       formattedValue = maskPhone(value);
     }
-    
+
     setFormData({ ...formData, [name]: formattedValue });
   };
 
@@ -89,7 +89,7 @@ export default function PerfilAluno() {
         </div>
 
         {/* Avatar */}
-        <AvatarUpload 
+        <AvatarUpload
           currentAvatar={avatar}
           nome={formData.nomeCompleto}
           onAvatarChange={setAvatar}
@@ -166,7 +166,7 @@ export default function PerfilAluno() {
                 />
               </div>
 
-              <div style={styles.formGroup}>
+              <div style={{...styles.formGroup, gridColumn: 'span 2'}}>
                 <label style={styles.label}>Data de Nascimento</label>
                 <input
                   type="date"
@@ -223,7 +223,7 @@ export default function PerfilAluno() {
                 />
               </div>
 
-              <div style={styles.formGroup}>
+              <div style={{...styles.formGroup, gridColumn: 'span 2'}}>
                 <label style={styles.label}>Matrícula</label>
                 <input
                   type="text"
@@ -256,7 +256,7 @@ export default function PerfilAluno() {
                 />
               </div>
 
-              <div style={styles.formGroup}>
+              <div style={{...styles.formGroup, gridColumn: 'span 2'}}>
                 <label style={styles.label}>Telefone do Responsável</label>
                 <input
                   type="text"
@@ -342,7 +342,7 @@ export default function PerfilAluno() {
                 <div key={index} style={styles.materiaTag}>
                   <span>{interesse}</span>
                   {editMode && (
-                    <button 
+                    <button
                       style={styles.removeMateria}
                       onClick={() => {
                         const novosInteresses = formData.interesses.filter((_, i) => i !== index);
@@ -354,7 +354,7 @@ export default function PerfilAluno() {
                   )}
                 </div>
               ))}
-              
+
               {editMode && (
                 <div style={styles.addMateria}>
                   <input
@@ -385,11 +385,11 @@ export default function PerfilAluno() {
           <div style={styles.dangerZone}>
             <h3 style={styles.dangerTitle}>⚠️ Zona de Perigo</h3>
             <div style={styles.dangerContent}>
-              <div>
+              <div style={styles.dangerText}>
                 <strong>Excluir conta</strong>
                 <p>Uma vez excluída, todos os seus dados serão permanentemente removidos.</p>
               </div>
-              <button 
+              <button
                 style={styles.dangerButton}
                 onClick={() => setShowDeleteModal(true)}
               >
@@ -426,22 +426,26 @@ export default function PerfilAluno() {
   );
 }
 
-// Reutilizar estilos do perfil do professor
+// Estilos corrigidos
 const styles = {
   container: {
     maxWidth: '900px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px' // Adicionado padding para telas menores
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -452,7 +456,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -466,7 +471,8 @@ const styles = {
   },
   headerActions: {
     display: 'flex',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   editButton: {
     padding: '12px 24px',
@@ -475,7 +481,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   cancelButton: {
     padding: '12px 24px',
@@ -483,7 +490,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   saveButton: {
     display: 'flex',
@@ -495,7 +503,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   profileCard: {
     backgroundColor: 'white',
@@ -515,7 +524,8 @@ const styles = {
     borderRadius: '10px',
     display: 'flex',
     alignItems: 'center',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   statLabel: {
     fontSize: '11px',
@@ -545,7 +555,8 @@ const styles = {
     gap: '20px'
   },
   formGroup: {
-    marginBottom: '5px'
+    marginBottom: '5px',
+    minWidth: 0 // Importante para evitar overflow em grids
   },
   label: {
     display: 'block',
@@ -560,7 +571,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   inputDisabled: {
     backgroundColor: '#f9fafb',
@@ -587,7 +599,9 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
     padding: '2px',
-    color: '#6b7280'
+    color: '#6b7280',
+    display: 'flex',
+    alignItems: 'center'
   },
   addMateria: {
     marginTop: '10px'
@@ -598,7 +612,8 @@ const styles = {
     borderRadius: '20px',
     fontSize: '13px',
     outline: 'none',
-    width: '200px'
+    width: '200px',
+    boxSizing: 'border-box'
   },
   dangerZone: {
     marginTop: '20px',
@@ -614,7 +629,13 @@ const styles = {
   dangerContent: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '15px'
+  },
+  dangerText: {
+    flex: 1,
+    minWidth: '250px'
   },
   dangerButton: {
     padding: '10px 20px',
@@ -622,7 +643,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalOverlay: {
     position: 'fixed',
@@ -634,14 +656,16 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1000
+    zIndex: 1000,
+    padding: '15px'
   },
   modal: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '25px',
     maxWidth: '500px',
-    width: '90%'
+    width: '100%',
+    boxSizing: 'border-box'
   },
   modalTitle: {
     fontSize: '18px',
@@ -657,14 +681,16 @@ const styles = {
   modalActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   modalCancel: {
     padding: '10px 20px',
     backgroundColor: 'white',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalConfirm: {
     padding: '10px 20px',
@@ -672,6 +698,7 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   }
 };

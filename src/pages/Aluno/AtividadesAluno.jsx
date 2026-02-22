@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AtividadeCard from '../../components/AtividadeCard';
-import { 
+import {
   ArrowLeft, Search, Calendar,
   Clock, CheckCircle, AlertCircle
 } from 'lucide-react';
@@ -134,9 +134,9 @@ export default function AtividadesAluno() {
           </div>
         </div>
 
-        {/* Busca e Filtros */}
-        <div style={styles.searchSection}>
-          <div style={styles.searchBox}>
+        {/* Busca e Filtros - CORRIGIDO */}
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
             <Search size={18} color="#9ca3af" style={styles.searchIcon} />
             <input
               type="text"
@@ -146,7 +146,7 @@ export default function AtividadesAluno() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
@@ -156,7 +156,7 @@ export default function AtividadesAluno() {
             <option value="entregue">Entregues</option>
             <option value="concluida">Concluídas</option>
           </select>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterTipo}
             onChange={(e) => setFilterTipo(e.target.value)}
@@ -191,15 +191,19 @@ export default function AtividadesAluno() {
 const styles = {
   container: {
     maxWidth: '900px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px' // Adicionado padding para telas menores
   },
   header: {
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -210,7 +214,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -246,28 +251,35 @@ const styles = {
     fontSize: '18px',
     color: '#1f2937'
   },
-  searchSection: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    width: '100%',
+    flexWrap: 'wrap'
   },
-  searchBox: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: '250px' // Largura mínima para o input
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   filterSelect: {
     padding: '0 20px',
@@ -276,7 +288,11 @@ const styles = {
     fontSize: '14px',
     outline: 'none',
     cursor: 'pointer',
-    minWidth: '130px'
+    minWidth: '150px',
+    height: '45px',
+    flexShrink: 0,
+    backgroundColor: 'white',
+    boxSizing: 'border-box'
   },
   atividadesList: {
     marginBottom: '30px'
@@ -311,20 +327,24 @@ const styles = {
     gap: '8px',
     padding: '10px',
     backgroundColor: '#f9fafb',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    flexWrap: 'wrap'
   },
   proximaData: {
     fontSize: '12px',
     fontWeight: '500',
-    color: '#3b82f6'
+    color: '#3b82f6',
+    flexShrink: 0
   },
   proximaTitulo: {
     flex: 1,
     fontSize: '13px',
-    color: '#1f2937'
+    color: '#1f2937',
+    minWidth: '200px'
   },
   proximaDisciplina: {
     fontSize: '11px',
-    color: '#6b7280'
+    color: '#6b7280',
+    flexShrink: 0
   }
 };
