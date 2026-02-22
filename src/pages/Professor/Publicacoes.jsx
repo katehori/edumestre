@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PublicacaoCard from '../../components/PublicacaoCard';
-import { 
-  ArrowLeft, Plus, Search, Filter, X, 
+import {
+  ArrowLeft, Plus, Search, Filter, X,
   Youtube, Link as LinkIcon, FileText, Image,
   Upload, Trash2, Save
 } from 'lucide-react';
@@ -16,7 +16,7 @@ export default function Publicacoes() {
   const [selectedPublicacao, setSelectedPublicacao] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTurma, setFilterTurma] = useState('todas');
-  
+
   const [novaPublicacao, setNovaPublicacao] = useState({
     titulo: '',
     conteudo: '',
@@ -46,6 +46,7 @@ export default function Publicacoes() {
       autor: 'Prof. Carlos Silva',
       autorCor: '#3b82f6',
       turma: '6º Ano A',
+      turmaId: 1, // Adicionado turmaId
       data: '2 horas atrás',
       likes: 23,
       comentarios: [
@@ -65,6 +66,7 @@ export default function Publicacoes() {
       autor: 'Prof. Carlos Silva',
       autorCor: '#3b82f6',
       turma: '6º Ano A',
+      turmaId: 1, // Adicionado turmaId
       data: '1 dia atrás',
       likes: 45,
       comentarios: [
@@ -83,6 +85,7 @@ export default function Publicacoes() {
       autor: 'Prof. Carlos Silva',
       autorCor: '#3b82f6',
       turma: '7º Ano B',
+      turmaId: 2, // Adicionado turmaId
       data: '3 dias atrás',
       likes: 12,
       comentarios: [],
@@ -93,10 +96,52 @@ export default function Publicacoes() {
       ],
       visualizacoes: 34
     },
+    {
+      id: 4,
+      titulo: 'Atividade de Matemática - 7º Ano',
+      conteudo: 'Atividade sobre equações de primeiro grau para ser entregue até sexta.',
+      autor: 'Prof. Carlos Silva',
+      autorCor: '#3b82f6',
+      turma: '7º Ano B',
+      turmaId: 2, // Adicionado turmaId
+      data: '1 dia atrás',
+      likes: 18,
+      comentarios: [
+        { autor: 'Ana Oliveira', texto: 'Professor, pode fazer em dupla?', data: '12h atrás' }
+      ],
+      usuarioCurtiu: false,
+      midias: [
+        { tipo: 'arquivo', nome: 'Atividade_Equacoes.pdf', tamanho: '1.2 MB' }
+      ],
+      visualizacoes: 25
+    },
+    {
+      id: 5,
+      titulo: 'Material de Apoio - 8º Ano',
+      conteudo: 'Material complementar sobre geometria para o 8º ano.',
+      autor: 'Prof. Carlos Silva',
+      autorCor: '#3b82f6',
+      turma: '8º Ano C',
+      turmaId: 3, // Adicionado turmaId
+      data: '5 dias atrás',
+      likes: 9,
+      comentarios: [],
+      usuarioCurtiu: false,
+      midias: [
+        { tipo: 'link', url: 'https://www.geometria.com.br/material' }
+      ],
+      visualizacoes: 15
+    },
   ]);
 
   const adicionarMidia = () => {
     if (midiaAtual.tipo === 'link' && midiaAtual.url) {
+      setNovaPublicacao({
+        ...novaPublicacao,
+        midias: [...novaPublicacao.midias, { ...midiaAtual }]
+      });
+      setMidiaAtual({ tipo: 'link', url: '', nome: '' });
+    } else if (midiaAtual.tipo === 'youtube' && midiaAtual.url) {
       setNovaPublicacao({
         ...novaPublicacao,
         midias: [...novaPublicacao.midias, { ...midiaAtual }]
@@ -117,24 +162,24 @@ export default function Publicacoes() {
   };
 
   const handleLike = (id) => {
-    setPublicacoes(publicacoes.map(pub => 
-      pub.id === id 
+    setPublicacoes(publicacoes.map(pub =>
+      pub.id === id
         ? { ...pub, likes: pub.usuarioCurtiu ? pub.likes - 1 : pub.likes + 1, usuarioCurtiu: !pub.usuarioCurtiu }
         : pub
     ));
   };
 
   const handleComment = (id, texto) => {
-    setPublicacoes(publicacoes.map(pub => 
-      pub.id === id 
-        ? { 
-            ...pub, 
-            comentarios: [...pub.comentarios, { 
-              autor: 'João Silva', 
-              texto, 
-              data: 'agora mesmo' 
-            }] 
-          }
+    setPublicacoes(publicacoes.map(pub =>
+      pub.id === id
+        ? {
+          ...pub,
+          comentarios: [...pub.comentarios, {
+            autor: 'João Silva',
+            texto,
+            data: 'agora mesmo'
+          }]
+        }
         : pub
     ));
   };
@@ -159,19 +204,21 @@ export default function Publicacoes() {
   const handleSave = () => {
     if (showEditModal) {
       // Editar
-      setPublicacoes(publicacoes.map(p => 
-        p.id === selectedPublicacao.id 
+      setPublicacoes(publicacoes.map(p =>
+        p.id === selectedPublicacao.id
           ? { ...novaPublicacao, id: p.id }
           : p
       ));
       setShowEditModal(false);
     } else {
       // Criar nova
+      const turmaSelecionada = turmas.find(t => t.id === parseInt(novaPublicacao.turmaId));
       const nova = {
         ...novaPublicacao,
         id: publicacoes.length + 1,
         autor: 'Prof. Carlos Silva',
         autorCor: '#3b82f6',
+        turma: turmaSelecionada?.nome || '',
         data: 'agora mesmo',
         likes: 0,
         comentarios: [],
@@ -184,10 +231,17 @@ export default function Publicacoes() {
     setNovaPublicacao({ titulo: '', conteudo: '', turmaId: '', midias: [] });
   };
 
+  // Função de filtro corrigida
   const filtrarPublicacoes = publicacoes.filter(pub => {
-    const matchesSearch = pub.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         pub.conteudo.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesTurma = filterTurma === 'todas' || pub.turmaId === filterTurma;
+    // Filtro por texto
+    const matchesSearch = searchTerm === '' ||
+      pub.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      pub.conteudo.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // Filtro por turma - corrigido para comparar corretamente
+    const matchesTurma = filterTurma === 'todas' ||
+      pub.turmaId === parseInt(filterTurma);
+
     return matchesSearch && matchesTurma;
   });
 
@@ -211,9 +265,9 @@ export default function Publicacoes() {
           </button>
         </div>
 
-        {/* Busca e Filtros */}
-        <div style={styles.searchSection}>
-          <div style={styles.searchBox}>
+        {/* Busca e Filtros - CORRIGIDO */}
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
             <Search size={18} color="#9ca3af" style={styles.searchIcon} />
             <input
               type="text"
@@ -223,7 +277,7 @@ export default function Publicacoes() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterTurma}
             onChange={(e) => setFilterTurma(e.target.value)}
@@ -257,19 +311,19 @@ export default function Publicacoes() {
 
         {/* Lista de Publicações */}
         <div style={styles.publicacoesList}>
-          {filtrarPublicacoes.map(publicacao => (
-            <PublicacaoCard
-              key={publicacao.id}
-              publicacao={publicacao}
-              perfil="professor"
-              onLike={handleLike}
-              onComment={handleComment}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-
-          {filtrarPublicacoes.length === 0 && (
+          {filtrarPublicacoes.length > 0 ? (
+            filtrarPublicacoes.map(publicacao => (
+              <PublicacaoCard
+                key={publicacao.id}
+                publicacao={publicacao}
+                perfil="professor"
+                onLike={handleLike}
+                onComment={handleComment}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))
+          ) : (
             <div style={styles.emptyState}>
               <p>Nenhuma publicação encontrada</p>
               <button style={styles.criarPrimeiraBtn} onClick={() => setShowCriarModal(true)}>
@@ -288,7 +342,7 @@ export default function Publicacoes() {
               <h3 style={styles.modalTitle}>
                 {showEditModal ? 'Editar Publicação' : 'Nova Publicação'}
               </h3>
-              <button 
+              <button
                 style={styles.modalClose}
                 onClick={() => {
                   setShowCriarModal(false);
@@ -378,21 +432,29 @@ export default function Publicacoes() {
                         style={{ display: 'none' }}
                         onChange={(e) => {
                           const file = e.target.files[0];
-                          setMidiaAtual({ 
-                            ...midiaAtual, 
-                            nome: file.name,
-                            tamanho: `${(file.size / 1024 / 1024).toFixed(2)} MB`
-                          });
+                          if (file) {
+                            setMidiaAtual({
+                              ...midiaAtual,
+                              nome: file.name,
+                              tamanho: `${(file.size / 1024 / 1024).toFixed(2)} MB`
+                            });
+                          }
                         }}
                       />
                       <label htmlFor="arquivo" style={styles.uploadLabel}>
                         <Upload size={16} />
-                        Escolher arquivo
+                        {midiaAtual.nome || 'Escolher arquivo'}
                       </label>
                     </div>
                   )}
 
-                  <button style={styles.adicionarMidiaBtn} onClick={adicionarMidia}>
+                  <button
+                    style={styles.adicionarMidiaBtn}
+                    onClick={adicionarMidia}
+                    disabled={(midiaAtual.tipo === 'link' && !midiaAtual.url) ||
+                      (midiaAtual.tipo === 'youtube' && !midiaAtual.url) ||
+                      (midiaAtual.tipo === 'arquivo' && !midiaAtual.nome)}
+                  >
                     Adicionar
                   </button>
                 </div>
@@ -408,7 +470,7 @@ export default function Publicacoes() {
                         <span style={styles.midiaNome}>
                           {midia.tipo === 'link' ? midia.url : midia.nome}
                         </span>
-                        <button 
+                        <button
                           style={styles.removerMidia}
                           onClick={() => removerMidia(index)}
                         >
@@ -422,7 +484,7 @@ export default function Publicacoes() {
             </div>
 
             <div style={styles.modalFooter}>
-              <button 
+              <button
                 style={styles.cancelarBtn}
                 onClick={() => {
                   setShowCriarModal(false);
@@ -432,7 +494,7 @@ export default function Publicacoes() {
               >
                 Cancelar
               </button>
-              <button 
+              <button
                 style={styles.salvarBtn}
                 onClick={handleSave}
                 disabled={!novaPublicacao.titulo || !novaPublicacao.turmaId}
@@ -479,12 +541,15 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -495,7 +560,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -517,30 +583,37 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
-  searchSection: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    width: '100%'
   },
-  searchBox: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: 0 // Importante para evitar overflow
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   filterSelect: {
     padding: '0 20px',
@@ -548,7 +621,9 @@ const styles = {
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0,
+    minWidth: '150px'
   },
   statsGrid: {
     display: 'grid',
@@ -628,7 +703,8 @@ const styles = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '5px'
+    padding: '5px',
+    flexShrink: 0
   },
   modalContent: {
     marginBottom: '20px'
@@ -649,7 +725,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   select: {
     width: '100%',
@@ -657,7 +734,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   textarea: {
     width: '100%',
@@ -666,12 +744,15 @@ const styles = {
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    fontFamily: 'inherit'
+    fontFamily: 'inherit',
+    boxSizing: 'border-box',
+    resize: 'vertical'
   },
   midiaControls: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap'
   },
   midiaTipo: {
     width: '120px',
@@ -679,18 +760,22 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    flexShrink: 0
   },
   midiaInput: {
     flex: 1,
+    minWidth: '200px',
     padding: '10px 15px',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   uploadArea: {
-    flex: 1
+    flex: 1,
+    minWidth: '200px'
   },
   uploadLabel: {
     display: 'flex',
@@ -702,7 +787,10 @@ const styles = {
     border: '1px dashed #9ca3af',
     borderRadius: '6px',
     cursor: 'pointer',
-    fontSize: '13px'
+    fontSize: '13px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   },
   adicionarMidiaBtn: {
     padding: '10px 20px',
@@ -710,7 +798,12 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     cursor: 'pointer',
-    fontSize: '13px'
+    fontSize: '13px',
+    flexShrink: 0,
+    ':disabled': {
+      opacity: 0.5,
+      cursor: 'not-allowed'
+    }
   },
   midiasLista: {
     marginTop: '10px'
@@ -727,13 +820,15 @@ const styles = {
   midiaNome: {
     flex: 1,
     fontSize: '12px',
-    color: '#4b5563'
+    color: '#4b5563',
+    wordBreak: 'break-all'
   },
   removerMidia: {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '2px'
+    padding: '2px',
+    flexShrink: 0
   },
   modalFooter: {
     display: 'flex',
@@ -759,7 +854,11 @@ const styles = {
     border: 'none',
     borderRadius: '6px',
     cursor: 'pointer',
-    fontSize: '13px'
+    fontSize: '13px',
+    ':disabled': {
+      opacity: 0.5,
+      cursor: 'not-allowed'
+    }
   },
   modalText: {
     fontSize: '14px',

@@ -12,6 +12,7 @@ export default function DesempenhoPai() {
   const navigate = useNavigate();
   const [filhoSelecionado, setFilhoSelecionado] = useState('joao');
   const [periodo, setPeriodo] = useState('bimestre');
+  const [abaAtiva, setAbaAtiva] = useState('notas'); // 'notas', 'ranking', 'conquistas'
 
   const filhos = [
     { id: 'joao', nome: 'João Silva', turma: '6º Ano A' },
@@ -117,6 +118,99 @@ export default function DesempenhoPai() {
   const conquistasAtuais = filhoSelecionado === 'joao' ? conquistasJoao : conquistasMaria;
   const filho = filhos.find(f => f.id === filhoSelecionado);
 
+  const renderConteudo = () => {
+    switch(abaAtiva) {
+      case 'notas':
+        return (
+          <div style={styles.section}>
+            <h3 style={styles.sectionTitle}>📝 Boletim de Notas</h3>
+            <div style={styles.notasGrid}>
+              <div style={styles.notaCard}>
+                <h4>Matemática</h4>
+                <div style={styles.notasLista}>
+                  {notasAtuais.matematica.map((nota, i) => (
+                    <span key={i} style={styles.notaItem}>{i+1}º Bim: {nota}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={styles.notaCard}>
+                <h4>Português</h4>
+                <div style={styles.notasLista}>
+                  {notasAtuais.portugues.map((nota, i) => (
+                    <span key={i} style={styles.notaItem}>{i+1}º Bim: {nota}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={styles.notaCard}>
+                <h4>Ciências</h4>
+                <div style={styles.notasLista}>
+                  {notasAtuais.ciencias.map((nota, i) => (
+                    <span key={i} style={styles.notaItem}>{i+1}º Bim: {nota}</span>
+                  ))}
+                </div>
+              </div>
+              <div style={styles.notaCard}>
+                <h4>História</h4>
+                <div style={styles.notasLista}>
+                  {notasAtuais.historia.map((nota, i) => (
+                    <span key={i} style={styles.notaItem}>{i+1}º Bim: {nota}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'ranking':
+        return (
+          <div style={styles.section}>
+            <div style={styles.sectionHeader}>
+              <h3 style={styles.sectionTitle}>🏆 Ranking da Turma</h3>
+              <select
+                style={styles.periodoSelect}
+                value={periodo}
+                onChange={(e) => setPeriodo(e.target.value)}
+              >
+                <option value="bimestre">Este Bimestre</option>
+                <option value="mes">Este Mês</option>
+                <option value="ano">Este Ano</option>
+              </select>
+            </div>
+            <div style={styles.rankingLista}>
+              {rankingAtual.map((aluno, index) => (
+                <RankingCard
+                  key={aluno.id}
+                  aluno={aluno}
+                  posicao={index + 1}
+                  isCurrentUser={aluno.isCurrentUser}
+                />
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'conquistas':
+        return (
+          <div style={styles.section}>
+            <h3 style={styles.sectionTitle}>⭐ Conquistas</h3>
+            <div style={styles.conquistasLista}>
+              {conquistasAtuais.map(conquista => (
+                <ConquistaCard
+                  key={conquista.id}
+                  conquista={conquista}
+                  conquistada={conquista.conquistada}
+                  progresso={conquista.progresso}
+                />
+              ))}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <Layout perfil="pai" nome="Carlos Silva" turmaInfo="Responsável por 2 alunos">
       <div style={styles.container}>
@@ -194,99 +288,31 @@ export default function DesempenhoPai() {
 
         {/* Tabs */}
         <div style={styles.tabs}>
-          <button style={{...styles.tab, ...styles.tabAtivo}}>
+          <button
+            style={{...styles.tab, ...(abaAtiva === 'notas' ? styles.tabAtivo : {})}}
+            onClick={() => setAbaAtiva('notas')}
+          >
             <Award size={16} />
             Notas
           </button>
-          <button style={styles.tab}>
+          <button
+            style={{...styles.tab, ...(abaAtiva === 'ranking' ? styles.tabAtivo : {})}}
+            onClick={() => setAbaAtiva('ranking')}
+          >
             <Trophy size={16} />
             Ranking
           </button>
-          <button style={styles.tab}>
+          <button
+            style={{...styles.tab, ...(abaAtiva === 'conquistas' ? styles.tabAtivo : {})}}
+            onClick={() => setAbaAtiva('conquistas')}
+          >
             <Star size={16} />
             Conquistas
           </button>
         </div>
 
-        {/* Seção de Notas */}
-        <div style={styles.section}>
-          <h3 style={styles.sectionTitle}>📝 Boletim de Notas</h3>
-          <div style={styles.notasGrid}>
-            <div style={styles.notaCard}>
-              <h4>Matemática</h4>
-              <div style={styles.notasLista}>
-                {notasAtuais.matematica.map((nota, i) => (
-                  <span key={i} style={styles.notaItem}>1º Bim: {nota}</span>
-                ))}
-              </div>
-            </div>
-            <div style={styles.notaCard}>
-              <h4>Português</h4>
-              <div style={styles.notasLista}>
-                {notasAtuais.portugues.map((nota, i) => (
-                  <span key={i} style={styles.notaItem}>1º Bim: {nota}</span>
-                ))}
-              </div>
-            </div>
-            <div style={styles.notaCard}>
-              <h4>Ciências</h4>
-              <div style={styles.notasLista}>
-                {notasAtuais.ciencias.map((nota, i) => (
-                  <span key={i} style={styles.notaItem}>1º Bim: {nota}</span>
-                ))}
-              </div>
-            </div>
-            <div style={styles.notaCard}>
-              <h4>História</h4>
-              <div style={styles.notasLista}>
-                {notasAtuais.historia.map((nota, i) => (
-                  <span key={i} style={styles.notaItem}>1º Bim: {nota}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Seção de Ranking */}
-        <div style={styles.section}>
-          <div style={styles.sectionHeader}>
-            <h3 style={styles.sectionTitle}>🏆 Ranking da Turma</h3>
-            <select 
-              style={styles.periodoSelect}
-              value={periodo}
-              onChange={(e) => setPeriodo(e.target.value)}
-            >
-              <option value="bimestre">Este Bimestre</option>
-              <option value="mes">Este Mês</option>
-              <option value="ano">Este Ano</option>
-            </select>
-          </div>
-          <div style={styles.rankingLista}>
-            {rankingAtual.map((aluno, index) => (
-              <RankingCard
-                key={aluno.id}
-                aluno={aluno}
-                posicao={index + 1}
-                isCurrentUser={aluno.isCurrentUser}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Seção de Conquistas */}
-        <div style={styles.section}>
-          <h3 style={styles.sectionTitle}>⭐ Conquistas</h3>
-          <div style={styles.conquistasLista}>
-            {conquistasAtuais.map(conquista => (
-              <ConquistaCard
-                key={conquista.id}
-                conquista={conquista}
-                conquistada={conquista.conquistada}
-                progresso={conquista.progresso}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Conteúdo dinâmico baseado na aba ativa */}
+        {renderConteudo()}
       </div>
     </Layout>
   );

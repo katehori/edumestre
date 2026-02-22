@@ -13,7 +13,6 @@ export default function PublicacaoCard({
   onComment, 
   onEdit, 
   onDelete,
-  onShare 
 }) {
   const [showComments, setShowComments] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
@@ -174,10 +173,6 @@ export default function PublicacaoCard({
         >
           <MessageCircle size={18} />
           Comentar
-        </button>
-        <button style={styles.acaoButton} onClick={() => onShare?.(publicacao)}>
-          <Share2 size={18} />
-          Compartilhar
         </button>
       </div>
 
@@ -393,7 +388,7 @@ const styles = {
   },
   acoes: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '5px',
     marginBottom: '15px'
   },

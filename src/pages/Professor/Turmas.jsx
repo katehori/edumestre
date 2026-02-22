@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import { Plus, Users, QrCode, ArrowLeft, Search, Filter, MoreVertical, Copy, Check, Clock, BookOpen, Trash2 } from 'lucide-react';
+import { Plus, Users, QrCode, ArrowLeft, Search, Filter, Copy, Check, Clock, BookOpen, Trash2 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 export default function Turmas() {
@@ -109,8 +109,8 @@ export default function Turmas() {
       </div>
 
       {/* Barra de pesquisa e filtros */}
-      <div style={styles.searchBar}>
-        <div style={styles.searchInputContainer}>
+      <div style={styles.searchContainer}>
+        <div style={styles.searchWrapper}>
           <Search size={18} color="#9ca3af" style={styles.searchIcon} />
           <input
             type="text"
@@ -190,9 +190,6 @@ export default function Turmas() {
                     <h4 style={styles.turmaNome}>{turma.nome}</h4>
                     <span style={styles.turmaMateria}>{turma.materia}</span>
                   </div>
-                  <button style={styles.menuButton}>
-                    <MoreVertical size={18} color="#6b7280" />
-                  </button>
                 </div>
               </div>
 
@@ -335,12 +332,15 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -352,7 +352,8 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -376,31 +377,38 @@ const styles = {
     cursor: 'pointer',
     fontSize: '14px',
     fontWeight: '500',
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    flexShrink: 0
   },
-  searchBar: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    width: '100%'
   },
-  searchInputContainer: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: 0 // Importante para evitar overflow
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
     outline: 'none',
-    transition: 'border-color 0.3s'
+    transition: 'border-color 0.3s',
+    boxSizing: 'border-box'
   },
   filterButton: {
     display: 'flex',
@@ -412,7 +420,9 @@ const styles = {
     borderRadius: '8px',
     cursor: 'pointer',
     fontSize: '14px',
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    flexShrink: 0,
+    whiteSpace: 'nowrap'
   },
   statsGrid: {
     display: 'grid',
@@ -435,7 +445,8 @@ const styles = {
     borderRadius: '10px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   statLabel: {
     fontSize: '12px',
@@ -472,7 +483,8 @@ const styles = {
   turmaHeaderContent: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    cursor: 'pointer'
   },
   turmaNome: {
     margin: '0 0 5px',
@@ -487,7 +499,8 @@ const styles = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '5px'
+    padding: '5px',
+    flexShrink: 0
   },
   turmaBody: {
     padding: '20px'
@@ -495,7 +508,8 @@ const styles = {
   turmaStats: {
     display: 'flex',
     gap: '15px',
-    marginBottom: '15px'
+    marginBottom: '15px',
+    flexWrap: 'wrap'
   },
   turmaStat: {
     display: 'flex',
@@ -525,13 +539,17 @@ const styles = {
     flex: 1,
     fontSize: '14px',
     fontWeight: '500',
-    color: '#1f2937'
+    color: '#1f2937',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   },
   copyButton: {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '4px'
+    padding: '4px',
+    flexShrink: 0
   },
   qrContainer: {
     marginBottom: '15px',
@@ -570,7 +588,8 @@ const styles = {
     color: '#f59e0b',
     padding: '8px',
     backgroundColor: '#fef3c7',
-    borderRadius: '6px'
+    borderRadius: '6px',
+    flexWrap: 'wrap'
   },
   turmaFooter: {
     display: 'grid',
@@ -589,7 +608,10 @@ const styles = {
     gap: '5px',
     color: '#4b5563',
     transition: 'all 0.3s',
-    borderRight: '1px solid #e5e7eb'
+    borderRight: '1px solid #e5e7eb',
+    ':last-child': {
+      borderRight: 'none'
+    }
   },
   professoresSection: {
     marginBottom: '40px'
@@ -598,14 +620,17 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap',
+    gap: '10px'
   },
   verTodosBtn: {
     background: 'none',
     border: 'none',
     color: '#3b82f6',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   sectionDescription: {
     margin: '0 0 20px',
@@ -643,7 +668,8 @@ const styles = {
   professorStats: {
     display: 'flex',
     gap: '15px',
-    marginBottom: '15px'
+    marginBottom: '15px',
+    flexWrap: 'wrap'
   },
   professorStat: {
     display: 'flex',

@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AtividadeCard from '../../components/AtividadeCard';
-import { 
-  ArrowLeft, Plus, Search, Filter, X, Save,
-  FileText, Calendar, Clock, Users, ChevronDown,
-  Trash2, Copy, Eye, CheckCircle // <-- ADICIONAR CheckCircle AQUI
+import {
+  ArrowLeft, Plus, Search, X, Save,
+  FileText, Clock, Users,
+  Trash2, CheckCircle
 } from 'lucide-react';
 
 export default function Atividades() {
@@ -135,7 +135,7 @@ export default function Atividades() {
 
   const handleSave = () => {
     if (showEditModal) {
-      setAtividades(atividades.map(a => 
+      setAtividades(atividades.map(a =>
         a.id === selectedAtividade.id ? { ...novaAtividade, id: a.id } : a
       ));
       setShowEditModal(false);
@@ -215,9 +215,9 @@ export default function Atividades() {
           </div>
         </div>
 
-        {/* Busca e Filtros */}
-        <div style={styles.searchSection}>
-          <div style={styles.searchBox}>
+        {/* Busca e Filtros - CORRIGIDO */}
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
             <Search size={18} color="#9ca3af" style={styles.searchIcon} />
             <input
               type="text"
@@ -227,7 +227,7 @@ export default function Atividades() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterTipo}
             onChange={(e) => setFilterTipo(e.target.value)}
@@ -236,7 +236,7 @@ export default function Atividades() {
             <option value="atividade">Atividades</option>
             <option value="prova">Provas</option>
           </select>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterTurma}
             onChange={(e) => setFilterTurma(e.target.value)}
@@ -250,18 +250,18 @@ export default function Atividades() {
 
         {/* Tabs */}
         <div style={styles.tabs}>
-          <button 
+          <button
             style={{...styles.tab, ...(activeTab === 'ativas' ? styles.activeTab : {})}}
             onClick={() => setActiveTab('ativas')}
           >
             <Clock size={16} />
             Ativas
           </button>
-          <button 
+          <button
             style={{...styles.tab, ...(activeTab === 'concluidas' ? styles.activeTab : {})}}
             onClick={() => setActiveTab('concluidas')}
           >
-            <CheckCircle size={16} /> {/* CheckCircle está sendo usado aqui */}
+            <CheckCircle size={16} />
             Concluídas
           </button>
         </div>
@@ -298,7 +298,7 @@ export default function Atividades() {
               <h3 style={styles.modalTitle}>
                 {showEditModal ? 'Editar Atividade' : 'Nova Atividade'}
               </h3>
-              <button 
+              <button
                 style={styles.modalClose}
                 onClick={() => {
                   setShowCriarModal(false);
@@ -313,7 +313,7 @@ export default function Atividades() {
               {/* Informações básicas */}
               <div style={styles.formSection}>
                 <h4 style={styles.sectionTitle}>Informações Básicas</h4>
-                
+
                 <div style={styles.formRow}>
                   <div style={styles.formGroup}>
                     <label style={styles.label}>Tipo</label>
@@ -381,13 +381,13 @@ export default function Atividades() {
               {novaAtividade.tipo === 'prova' && (
                 <div style={styles.formSection}>
                   <h4 style={styles.sectionTitle}>Questões da Prova</h4>
-                  
+
                   {/* Lista de questões existentes */}
                   {novaAtividade.questoes.map((questao, index) => (
                     <div key={questao.id} style={styles.questaoItem}>
                       <div style={styles.questaoHeader}>
                         <strong>Questão {index + 1}</strong>
-                        <button 
+                        <button
                           style={styles.removeQuestao}
                           onClick={() => removerQuestao(questao.id)}
                         >
@@ -404,7 +404,7 @@ export default function Atividades() {
                   {/* Form para nova questão */}
                   <div style={styles.novaQuestao}>
                     <h5 style={styles.subtitle}>Adicionar Questão</h5>
-                    
+
                     <div style={styles.formRow}>
                       <div style={styles.formGroup}>
                         <label style={styles.label}>Tipo</label>
@@ -459,11 +459,11 @@ export default function Atividades() {
                               }}
                             />
                             {index === novaQuestao.opcoes.length - 1 && (
-                              <button 
+                              <button
                                 style={styles.addOpcao}
-                                onClick={() => setNovaQuestao({ 
-                                  ...novaQuestao, 
-                                  opcoes: [...novaQuestao.opcoes, ''] 
+                                onClick={() => setNovaQuestao({
+                                  ...novaQuestao,
+                                  opcoes: [...novaQuestao.opcoes, '']
                                 })}
                               >
                                 +
@@ -548,12 +548,15 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -564,7 +567,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -586,7 +590,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   statsGrid: {
     display: 'grid',
@@ -612,28 +617,35 @@ const styles = {
     fontSize: '20px',
     color: '#1f2937'
   },
-  searchSection: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    width: '100%',
+    flexWrap: 'wrap'
   },
-  searchBox: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: '250px' // Largura mínima para o input
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   filterSelect: {
     padding: '0 20px',
@@ -642,13 +654,16 @@ const styles = {
     fontSize: '14px',
     outline: 'none',
     cursor: 'pointer',
-    minWidth: '150px'
+    minWidth: '150px',
+    height: '45px',
+    flexShrink: 0
   },
   tabs: {
     display: 'flex',
     gap: '10px',
     marginBottom: '20px',
-    borderBottom: '2px solid #e5e7eb'
+    borderBottom: '2px solid #e5e7eb',
+    flexWrap: 'wrap'
   },
   tab: {
     display: 'flex',
@@ -661,7 +676,8 @@ const styles = {
     fontSize: '14px',
     color: '#6b7280',
     borderBottom: '2px solid transparent',
-    marginBottom: '-2px'
+    marginBottom: '-2px',
+    flexShrink: 0
   },
   activeTab: {
     color: '#2563eb',
@@ -721,7 +737,8 @@ const styles = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '5px'
+    padding: '5px',
+    flexShrink: 0
   },
   modalContent: {
     marginBottom: '20px'
@@ -758,7 +775,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   select: {
     width: '100%',
@@ -766,7 +784,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   textarea: {
     width: '100%',
@@ -775,7 +794,9 @@ const styles = {
     borderRadius: '6px',
     fontSize: '13px',
     outline: 'none',
-    fontFamily: 'inherit'
+    fontFamily: 'inherit',
+    boxSizing: 'border-box',
+    resize: 'vertical'
   },
   questaoItem: {
     backgroundColor: '#f9fafb',
@@ -787,12 +808,15 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap',
+    gap: '10px'
   },
   removeQuestao: {
     background: 'none',
     border: 'none',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   questaoEnunciado: {
     margin: '0 0 5px',
@@ -809,25 +833,23 @@ const styles = {
     borderRadius: '8px',
     marginTop: '15px'
   },
-  subtitle: {
-    fontSize: '14px',
-    margin: '0 0 15px',
-    color: '#1f2937'
-  },
   opcoesContainer: {
     marginBottom: '15px'
   },
   opcaoRow: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap'
   },
   opcaoInput: {
     flex: 1,
+    minWidth: '200px',
     padding: '8px 12px',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    fontSize: '13px'
+    fontSize: '13px',
+    boxSizing: 'border-box'
   },
   addOpcao: {
     width: '35px',
@@ -837,7 +859,8 @@ const styles = {
     border: 'none',
     borderRadius: '6px',
     cursor: 'pointer',
-    fontSize: '18px'
+    fontSize: '18px',
+    flexShrink: 0
   },
   adicionarQuestaoBtn: {
     display: 'flex',
@@ -862,13 +885,15 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     gap: '10px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexWrap: 'wrap'
   },
   modalFooter: {
     display: 'flex',
     justifyContent: 'flex-end',
     gap: '10px',
-    marginTop: '20px'
+    marginTop: '20px',
+    flexWrap: 'wrap'
   },
   cancelarBtn: {
     padding: '10px 20px',

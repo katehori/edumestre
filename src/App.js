@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import DashboardProfessor from './pages/Professor/DashboardProfessor';
 import Turmas from './pages/Professor/Turmas';
 import TurmaDetalhes from './pages/Professor/TurmaDetalhes';
-import TurmasProfessores from './pages/Professor/TurmasProfessores';
+import ComunidadeProfessores from './pages/Professor/ComunidadeProfessores';
 import Publicacoes from './pages/Professor/Publicacoes';
 import Atividades from './pages/Professor/Atividades';
 import CalendarioProfessor from './pages/Professor/Calendario';
@@ -45,7 +45,7 @@ function App() {
         <Route path="/professor" element={<DashboardProfessor />} />
         <Route path="/professor/turmas" element={<Turmas />} />
         <Route path="/professor/turma/:id" element={<TurmaDetalhes />} />
-        <Route path="/professor/comunidade" element={<TurmasProfessores />} />
+        <Route path="/professor/comunidade" element={<ComunidadeProfessores />} />
         <Route path="/professor/publicacoes" element={<Publicacoes />} />
         <Route path="/professor/atividades" element={<Atividades />} />
         <Route path="/professor/calendario" element={<CalendarioProfessor />} />

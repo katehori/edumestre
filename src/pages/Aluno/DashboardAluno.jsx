@@ -94,6 +94,13 @@ export default function DashboardAluno() {
         </button>
       </div>
 
+      {/* Banner WhatsApp */}
+      <div style={styles.whatsappBanner}>
+        <Bell size={20} />
+        <span>Você receberá notificações no WhatsApp sobre novas atividades e lembretes</span>
+        <button style={styles.ativarBtn}>Ativar notificações</button>
+      </div>
+
       <div style={styles.grid}>
         {/* Coluna da esquerda */}
         <div style={styles.leftColumn}>
@@ -265,13 +272,6 @@ export default function DashboardAluno() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* Banner WhatsApp */}
-      <div style={styles.whatsappBanner}>
-        <Bell size={20} />
-        <span>📱 Você receberá notificações no WhatsApp sobre novas atividades e lembretes</span>
-        <button style={styles.ativarBtn}>Ativar notificações</button>
       </div>
 
        {/* Seção do Calendário - NOVA */}
@@ -608,7 +608,8 @@ const styles = {
     padding: '15px 20px',
     backgroundColor: '#25D36620',
     borderRadius: '12px',
-    color: '#075e54'
+    color: '#075e54',
+    marginBottom: '40px'
   },
   ativarBtn: {
     marginLeft: 'auto',

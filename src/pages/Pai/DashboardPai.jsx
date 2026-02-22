@@ -204,7 +204,7 @@ export default function DashboardPai() {
       {/* Banner WhatsApp */}
       <div style={styles.whatsappBanner}>
         <Bell size={20} />
-        <span>📱 Você receberá notificações no WhatsApp sobre novas atividades e lembretes</span>
+        <span>Você receberá notificações no WhatsApp sobre novas atividades e lembretes</span>
         <button style={styles.ativarBtn}>Ativar notificações</button>
       </div>
 

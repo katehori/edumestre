@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import { 
-  ArrowLeft, Users, BookOpen, FileText, Award, 
+import {
+  ArrowLeft, Users, BookOpen, FileText, Award,
   Search, Filter, Plus, Download, Star,
   Clock
 } from 'lucide-react';
 
-export default function TurmasProfessores() {
+export default function ComunidadeProfessores() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('todas');
@@ -117,9 +117,9 @@ export default function TurmasProfessores() {
           </div>
         </div>
 
-        {/* Busca e Filtros */}
-        <div style={styles.searchSection}>
-          <div style={styles.searchBox}>
+        {/* Busca e Filtros - CORRIGIDO */}
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
             <Search size={18} color="#9ca3af" style={styles.searchIcon} />
             <input
               type="text"
@@ -137,19 +137,19 @@ export default function TurmasProfessores() {
 
         {/* Tabs */}
         <div style={styles.tabs}>
-          <button 
+          <button
             style={{...styles.tab, ...(activeTab === 'todas' ? styles.activeTab : {})}}
             onClick={() => setActiveTab('todas')}
           >
             Todas as Turmas
           </button>
-          <button 
+          <button
             style={{...styles.tab, ...(activeTab === 'minhas' ? styles.activeTab : {})}}
             onClick={() => setActiveTab('minhas')}
           >
             Minhas Turmas
           </button>
-          <button 
+          <button
             style={{...styles.tab, ...(activeTab === 'populares' ? styles.activeTab : {})}}
             onClick={() => setActiveTab('populares')}
           >
@@ -278,12 +278,15 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -294,7 +297,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -316,7 +320,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   statsGrid: {
     display: 'grid',
@@ -342,28 +347,34 @@ const styles = {
     fontSize: '20px',
     color: '#1f2937'
   },
-  searchSection: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    width: '100%'
   },
-  searchBox: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: 0 // Importante para evitar overflow
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   filterButton: {
     display: 'flex',
@@ -373,13 +384,17 @@ const styles = {
     backgroundColor: 'white',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: '14px',
+    flexShrink: 0,
+    whiteSpace: 'nowrap'
   },
   tabs: {
     display: 'flex',
     gap: '10px',
     marginBottom: '20px',
-    borderBottom: '2px solid #e5e7eb'
+    borderBottom: '2px solid #e5e7eb',
+    flexWrap: 'wrap'
   },
   tab: {
     padding: '12px 20px',
@@ -389,7 +404,8 @@ const styles = {
     fontSize: '14px',
     color: '#6b7280',
     borderBottom: '2px solid transparent',
-    marginBottom: '-2px'
+    marginBottom: '-2px',
+    flexShrink: 0
   },
   activeTab: {
     color: '#2563eb',
@@ -414,7 +430,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap',
+    gap: '10px'
   },
   turmaNome: {
     margin: 0,
@@ -426,7 +444,8 @@ const styles = {
     backgroundColor: '#fee2e2',
     color: '#dc2626',
     borderRadius: '20px',
-    fontSize: '11px'
+    fontSize: '11px',
+    flexShrink: 0
   },
   turmaDescricao: {
     margin: 0,
@@ -442,7 +461,8 @@ const styles = {
     gap: '15px',
     marginBottom: '15px',
     fontSize: '12px',
-    color: '#6b7280'
+    color: '#6b7280',
+    flexWrap: 'wrap'
   },
   turmaStat: {
     display: 'flex',
@@ -508,7 +528,8 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap'
   },
   materialTurma: {
     fontSize: '12px',
@@ -527,7 +548,8 @@ const styles = {
   materialStats: {
     display: 'flex',
     gap: '15px',
-    marginBottom: '15px'
+    marginBottom: '15px',
+    flexWrap: 'wrap'
   },
   materialStat: {
     display: 'flex',
