@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import Calendario from '../../components/Calendario';
-import { 
+import {
   ArrowLeft, Plus, X, Save, Trash2, Edit2,
   Calendar as CalendarIcon, Clock, Users, FileText
 } from 'lucide-react';
@@ -36,9 +36,12 @@ export default function CalendarioProfessor() {
 
   // Mock de atividades para vincular
   const atividades = [
-    { id: 1, titulo: 'Exercícios de Frações', turma: '6º Ano A', data: '2026-02-25' },
-    { id: 2, titulo: 'Prova Bimestral', turma: '6º Ano A', data: '2026-02-28' },
-    { id: 3, titulo: 'Lista de Geometria', turma: '7º Ano B', data: '2026-02-26' },
+    { id: 1, titulo: 'Exercícios de Frações', turma: '6º Ano A', data: '2025-02-25' },
+    { id: 2, titulo: 'Prova Bimestral', turma: '6º Ano A', data: '2025-02-28' },
+    { id: 3, titulo: 'Lista de Geometria', turma: '7º Ano B', data: '2025-02-26' },
+    { id: 4, titulo: 'Atividade de Português', turma: '6º Ano A', data: '2025-02-27' },
+    { id: 5, titulo: 'Trabalho de Ciências', turma: '7º Ano B', data: '2025-03-02' },
+    { id: 6, titulo: 'Prova de História', turma: '8º Ano C', data: '2025-03-05' },
   ];
 
   // Mock de eventos do calendário
@@ -84,14 +87,81 @@ export default function CalendarioProfessor() {
     },
     {
       id: 4,
-      titulo: 'Reunião de Pais',
-      descricao: 'Reunião bimestral com os responsáveis.',
+      titulo: 'Reunião de Pais - 6º Ano A',
+      descricao: 'Reunião bimestral com os responsáveis para apresentação de resultados.',
       tipo: 'evento',
       data: '2026-02-27',
       hora: '19:00',
       turma: '6º Ano A',
       disciplina: 'Geral'
     },
+    {
+      id: 5,
+      titulo: 'Entrega do Trabalho de Ciências',
+      descricao: 'Trabalho em grupo sobre o sistema solar.',
+      tipo: 'atividade',
+      data: '2026-03-02',
+      hora: '23:59',
+      turma: '7º Ano B',
+      disciplina: 'Ciências',
+      entregas: 5,
+      totalAlunos: 28
+    },
+    {
+      id: 6,
+      titulo: 'Prova de História - 8º Ano',
+      descricao: 'Conteúdo: Brasil Colônia e Império.',
+      tipo: 'prova',
+      data: '2026-03-05',
+      hora: '08:00',
+      turma: '8º Ano C',
+      disciplina: 'História',
+      entregas: 0,
+      totalAlunos: 30
+    },
+    {
+      id: 7,
+      titulo: 'Conselho de Classe',
+      descricao: 'Reunião do conselho de classe para avaliação do bimestre.',
+      tipo: 'evento',
+      data: '2026-03-07',
+      hora: '14:00',
+      turma: 'Todos',
+      disciplina: 'Geral'
+    },
+    {
+      id: 8,
+      titulo: 'Atividade de Português',
+      descricao: 'Exercícios de interpretação de texto.',
+      tipo: 'atividade',
+      data: '2026-02-27',
+      hora: '23:59',
+      turma: '6º Ano A',
+      disciplina: 'Português',
+      atividadeId: 4,
+      entregas: 12,
+      totalAlunos: 32
+    },
+    {
+      id: 9,
+      titulo: 'Plantão de Dúvidas',
+      descricao: 'Plantão para tirar dúvidas sobre a prova bimestral.',
+      tipo: 'evento',
+      data: '2026-02-26',
+      hora: '15:00',
+      turma: '6º Ano A',
+      disciplina: 'Matemática'
+    },
+    {
+      id: 10,
+      titulo: 'Prazo para Correção',
+      descricao: 'Data limite para envio das correções das provas.',
+      tipo: 'evento',
+      data: '2026-03-04',
+      hora: '18:00',
+      turma: 'Professores',
+      disciplina: 'Administrativo'
+    }
   ]);
 
   const handleEventClick = (evento) => {
@@ -130,7 +200,7 @@ export default function CalendarioProfessor() {
   const handleSave = () => {
     if (selectedEvent) {
       // Editar
-      setEventos(eventos.map(e => 
+      setEventos(eventos.map(e =>
         e.id === selectedEvent.id ? { ...novoEvento, id: e.id } : e
       ));
       setShowEditModal(false);
@@ -169,6 +239,20 @@ export default function CalendarioProfessor() {
         atividadeId: atividade.id
       });
     }
+  };
+
+  // Função para obter eventos dos próximos 7 dias a partir da data atual
+  const getProximosEventos = () => {
+    const hoje = new Date();
+    const daquiSeteDias = new Date();
+    daquiSeteDias.setDate(hoje.getDate() + 7);
+
+    return eventos
+      .filter(e => {
+        const dataEvento = new Date(e.data);
+        return dataEvento >= hoje && dataEvento <= daquiSeteDias;
+      })
+      .sort((a, b) => new Date(a.data) - new Date(b.data));
   };
 
   return (
@@ -210,47 +294,53 @@ export default function CalendarioProfessor() {
             <CalendarIcon size={24} color="#3b82f6" />
             <div>
               <span style={styles.statLabel}>Eventos este mês</span>
-              <strong style={styles.statValue}>12</strong>
+              <strong style={styles.statValue}>
+                {eventos.filter(e => {
+                  const dataEvento = new Date(e.data);
+                  const hoje = new Date();
+                  return dataEvento.getMonth() === hoje.getMonth() &&
+                    dataEvento.getFullYear() === hoje.getFullYear();
+                }).length}
+              </strong>
             </div>
           </div>
           <div style={styles.statCard}>
             <FileText size={24} color="#f59e0b" />
             <div>
               <span style={styles.statLabel}>Atividades</span>
-              <strong style={styles.statValue}>8</strong>
+              <strong style={styles.statValue}>
+                {eventos.filter(e => e.tipo === 'atividade').length}
+              </strong>
             </div>
           </div>
           <div style={styles.statCard}>
             <Clock size={24} color="#10b981" />
             <div>
               <span style={styles.statLabel}>Próximos 7 dias</span>
-              <strong style={styles.statValue}>5</strong>
+              <strong style={styles.statValue}>{getProximosEventos().length}</strong>
             </div>
           </div>
         </div>
 
-        {/* Eventos Próximos */}
+        {/* Eventos Próximos - AGORA COM MAIS EVENTOS */}
         <div style={styles.proximosSection}>
           <h3 style={styles.sectionTitle}>Próximos 7 dias</h3>
           <div style={styles.proximosLista}>
-            {eventos
-              .filter(e => new Date(e.data) >= new Date())
-              .sort((a, b) => new Date(a.data) - new Date(b.data))
-              .slice(0, 5)
-              .map(evento => (
-                <div 
-                  key={evento.id} 
+            {getProximosEventos().length > 0 ? (
+              getProximosEventos().map(evento => (
+                <div
+                  key={evento.id}
                   style={styles.proximoItem}
                   onClick={() => handleEventClick(evento)}
                 >
                   <div style={{
                     ...styles.proximoIcone,
-                    backgroundColor: evento.tipo === 'prova' ? '#f59e0b20' : 
-                                   evento.tipo === 'atividade' ? '#3b82f620' : '#10b98120',
-                    color: evento.tipo === 'prova' ? '#f59e0b' : 
-                          evento.tipo === 'atividade' ? '#3b82f6' : '#10b981'
+                    backgroundColor: evento.tipo === 'prova' ? '#f59e0b20' :
+                      evento.tipo === 'atividade' ? '#3b82f620' : '#10b98120',
+                    color: evento.tipo === 'prova' ? '#f59e0b' :
+                      evento.tipo === 'atividade' ? '#3b82f6' : '#10b981'
                   }}>
-                    {evento.tipo === 'prova' ? '📝' : '📚'}
+                    {evento.tipo === 'prova' ? '📝' : evento.tipo === 'atividade' ? '📚' : '📅'}
                   </div>
                   <div style={styles.proximoInfo}>
                     <strong>{evento.titulo}</strong>
@@ -264,7 +354,12 @@ export default function CalendarioProfessor() {
                     </span>
                   )}
                 </div>
-              ))}
+              ))
+            ) : (
+              <div style={styles.semEventos}>
+                <p>Nenhum evento programado para os próximos 7 dias</p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -282,7 +377,7 @@ export default function CalendarioProfessor() {
           <div style={styles.modal}>
             <div style={styles.modalHeader}>
               <h3 style={styles.modalTitle}>{selectedEvent.titulo}</h3>
-              <button 
+              <button
                 style={styles.modalClose}
                 onClick={() => setShowEventModal(false)}
               >
@@ -301,7 +396,7 @@ export default function CalendarioProfessor() {
                   <span>{selectedEvent.turma} • {selectedEvent.disciplina}</span>
                 </div>
                 <p style={styles.eventoDescricao}>{selectedEvent.descricao}</p>
-                
+
                 {selectedEvent.tipo !== 'evento' && (
                   <div style={styles.eventoStats}>
                     <div style={styles.eventoStat}>
@@ -318,21 +413,21 @@ export default function CalendarioProfessor() {
             </div>
 
             <div style={styles.modalFooter}>
-              <button 
+              <button
                 style={styles.editButton}
                 onClick={() => handleEdit(selectedEvent)}
               >
                 <Edit2 size={16} />
                 Editar
               </button>
-              <button 
+              <button
                 style={styles.deleteButton}
                 onClick={() => handleDelete(selectedEvent)}
               >
                 <Trash2 size={16} />
                 Excluir
               </button>
-              <button 
+              <button
                 style={styles.closeButton}
                 onClick={() => setShowEventModal(false)}
               >
@@ -346,12 +441,12 @@ export default function CalendarioProfessor() {
       {/* Modal de Criar/Editar Evento */}
       {showEditModal && (
         <div style={styles.modalOverlay}>
-          <div style={{...styles.modal, maxWidth: '500px'}}>
+          <div style={styles.modalEdit}>
             <div style={styles.modalHeader}>
               <h3 style={styles.modalTitle}>
                 {selectedEvent ? 'Editar Evento' : 'Novo Evento'}
               </h3>
-              <button 
+              <button
                 style={styles.modalClose}
                 onClick={() => {
                   setShowEditModal(false);
@@ -445,8 +540,8 @@ export default function CalendarioProfessor() {
                     value={novoEvento.turmaId}
                     onChange={(e) => {
                       const turma = turmas.find(t => t.id === parseInt(e.target.value));
-                      setNovoEvento({ 
-                        ...novoEvento, 
+                      setNovoEvento({
+                        ...novoEvento,
                         turmaId: e.target.value,
                         turma: turma?.nome,
                         disciplina: turma?.disciplina
@@ -481,7 +576,7 @@ export default function CalendarioProfessor() {
       {/* Modal de Confirmação de Exclusão */}
       {showDeleteModal && selectedEvent && (
         <div style={styles.modalOverlay}>
-          <div style={{...styles.modal, maxWidth: '400px'}}>
+          <div style={styles.modalDelete}>
             <h3 style={styles.modalTitle}>Excluir Evento</h3>
             <p style={styles.modalText}>
               Tem certeza que deseja excluir o evento "{selectedEvent.titulo}"?
@@ -506,18 +601,22 @@ export default function CalendarioProfessor() {
 const styles = {
   container: {
     maxWidth: '1200px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px'
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -528,7 +627,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -550,7 +650,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   statsGrid: {
     display: 'grid',
@@ -597,7 +698,8 @@ const styles = {
     gap: '15px',
     padding: '12px',
     borderBottom: '1px solid #e5e7eb',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexWrap: 'wrap'
   },
   proximoIcone: {
     width: '40px',
@@ -606,10 +708,12 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '20px'
+    fontSize: '20px',
+    flexShrink: 0
   },
   proximoInfo: {
-    flex: 1
+    flex: 1,
+    minWidth: '200px'
   },
   proximoMeta: {
     display: 'block',
@@ -619,7 +723,13 @@ const styles = {
   },
   proximoEntregas: {
     fontSize: '12px',
-    color: '#3b82f6'
+    color: '#3b82f6',
+    flexShrink: 0
+  },
+  semEventos: {
+    padding: '30px',
+    textAlign: 'center',
+    color: '#6b7280'
   },
   modalOverlay: {
     position: 'fixed',
@@ -631,22 +741,43 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1000
+    zIndex: 1000,
+    padding: '15px'
   },
   modal: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '25px',
     maxWidth: '600px',
-    width: '90%',
+    width: '100%',
     maxHeight: '90vh',
-    overflow: 'auto'
+    overflow: 'auto',
+    boxSizing: 'border-box'
+  },
+  modalEdit: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    padding: '25px',
+    maxWidth: '500px',
+    width: '100%',
+    maxHeight: '90vh',
+    overflow: 'auto',
+    boxSizing: 'border-box'
+  },
+  modalDelete: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    padding: '25px',
+    maxWidth: '400px',
+    width: '100%',
+    boxSizing: 'border-box'
   },
   modalHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    gap: '15px'
   },
   modalTitle: {
     fontSize: '18px',
@@ -657,7 +788,8 @@ const styles = {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    padding: '5px'
+    padding: '5px',
+    flexShrink: 0
   },
   modalContent: {
     marginBottom: '20px'
@@ -672,7 +804,8 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     fontSize: '14px',
-    color: '#4b5563'
+    color: '#4b5563',
+    flexWrap: 'wrap'
   },
   eventoDescricao: {
     fontSize: '14px',
@@ -696,7 +829,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-end',
     gap: '10px',
-    marginTop: '20px'
+    marginTop: '20px',
+    flexWrap: 'wrap'
   },
   editButton: {
     display: 'flex',
@@ -707,7 +841,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   deleteButton: {
     display: 'flex',
@@ -718,17 +853,20 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   closeButton: {
     padding: '8px 16px',
     backgroundColor: '#f3f4f6',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   formGroup: {
-    marginBottom: '15px'
+    marginBottom: '15px',
+    width: '100%'
   },
   label: {
     display: 'block',
@@ -743,7 +881,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   select: {
     width: '100%',
@@ -751,7 +890,9 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box',
+    backgroundColor: 'white'
   },
   textarea: {
     width: '100%',
@@ -760,11 +901,13 @@ const styles = {
     borderRadius: '6px',
     fontSize: '13px',
     outline: 'none',
-    fontFamily: 'inherit'
+    fontFamily: 'inherit',
+    boxSizing: 'border-box',
+    resize: 'vertical'
   },
   formRow: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '15px',
     marginBottom: '15px'
   },
@@ -773,7 +916,9 @@ const styles = {
     backgroundColor: 'white',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: '13px',
+    flexShrink: 0
   },
   salvarBtn: {
     display: 'flex',
@@ -784,11 +929,14 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: '13px',
+    flexShrink: 0
   },
   modalText: {
     fontSize: '14px',
     color: '#4b5563',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    lineHeight: '1.6'
   }
 };

@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AtividadeCard from '../../components/AtividadeCard';
 import { 
-  ArrowLeft, Search, Filter, Eye, Users,
-  Calendar, Award, Download, FileText
+  ArrowLeft, Search, Eye, Users
 } from 'lucide-react';
 
 export default function AtividadesPai() {

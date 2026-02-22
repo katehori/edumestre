@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AvatarUpload from '../../components/AvatarUpload';
-import { maskPhone, maskCPF, unmask } from '../../utils/masks';
-import { 
-  ArrowLeft, Save, User, Mail, Phone, Calendar, 
-  CreditCard, GraduationCap, BookOpen, MapPin, 
+import { maskPhone, maskCPF } from '../../utils/masks';
+import {
+  ArrowLeft, Save, User,
+  GraduationCap, BookOpen, MapPin,
   Briefcase, Globe, Github, Linkedin, X, Plus
 } from 'lucide-react';
 
@@ -24,30 +24,30 @@ export default function PerfilProfessor() {
     celular: '(11) 98765-4321',
     dataNascimento: '15/05/1985',
     cpf: '123.456.789-00',
-    
+
     // Dados Profissionais
     registroProfissional: '123456',
     graduacao: 'Licenciatura em Matemática',
     instituicao: 'Universidade de São Paulo',
     anoConclusao: '2008',
     experiencia: 'mais10',
-    
+
     // Localização
     endereco: 'Rua das Flores, 123',
     cidade: 'São Paulo',
     estado: 'SP',
     cep: '01234-567',
-    
+
     // Biografia
     biografia: 'Professor de Matemática há 15 anos, apaixonado por educação e tecnologia. Especialista em ensino de frações e geometria.',
-    
+
     // Disciplinas
     materias: ['Matemática', 'Física', 'Cálculo']
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // Aplica máscaras específicas
     let formattedValue = value;
     switch (name) {
@@ -60,7 +60,7 @@ export default function PerfilProfessor() {
       default:
         formattedValue = value;
     }
-    
+
     setFormData({ ...formData, [name]: formattedValue });
   };
 
@@ -115,7 +115,7 @@ export default function PerfilProfessor() {
         </div>
 
         {/* Avatar */}
-        <AvatarUpload 
+        <AvatarUpload
           currentAvatar={avatar}
           nome={formData.nomeCompleto}
           onAvatarChange={setAvatar}
@@ -250,7 +250,7 @@ export default function PerfilProfessor() {
                 />
               </div>
 
-              <div style={styles.formGroup}>
+              <div style={{...styles.formGroup, gridColumn: 'span 2'}}>
                 <label style={styles.label}>Tempo de Experiência</label>
                 <select
                   name="experiencia"
@@ -280,7 +280,7 @@ export default function PerfilProfessor() {
                 <div key={index} style={styles.materiaTag}>
                   <span>{materia}</span>
                   {editMode && (
-                    <button 
+                    <button
                       style={styles.removeMateria}
                       onClick={() => {
                         const novasMaterias = formData.materias.filter((_, i) => i !== index);
@@ -292,7 +292,7 @@ export default function PerfilProfessor() {
                   )}
                 </div>
               ))}
-              
+
               {editMode && (
                 <div style={styles.addMateria}>
                   <input
@@ -400,14 +400,14 @@ export default function PerfilProfessor() {
               <Globe size={18} color="#3b82f6" />
               Redes Sociais
             </h3>
-            
+
             {redesSociais.map((rede, index) => (
               <div key={index} style={styles.redeSocialItem}>
                 {rede.nome === 'github' && <Github size={18} />}
                 {rede.nome === 'linkedin' && <Linkedin size={18} />}
-                <span>{rede.url}</span>
+                <span style={styles.redeUrl}>{rede.url}</span>
                 {editMode && (
-                  <button 
+                  <button
                     style={styles.removeRede}
                     onClick={() => removerRedeSocial(index)}
                   >
@@ -449,11 +449,11 @@ export default function PerfilProfessor() {
           <div style={styles.dangerZone}>
             <h3 style={styles.dangerTitle}>⚠️ Zona de Perigo</h3>
             <div style={styles.dangerContent}>
-              <div>
+              <div style={styles.dangerText}>
                 <strong>Excluir conta</strong>
                 <p>Uma vez excluída, todos os seus dados serão permanentemente removidos.</p>
               </div>
-              <button 
+              <button
                 style={styles.dangerButton}
                 onClick={() => setShowDeleteModal(true)}
               >
@@ -470,7 +470,7 @@ export default function PerfilProfessor() {
           <div style={styles.modal}>
             <h3 style={styles.modalTitle}>Excluir Conta</h3>
             <p style={styles.modalText}>
-              Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita e 
+              Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita e
               todos os seus dados, turmas, publicações e atividades serão permanentemente removidos.
             </p>
             <div style={styles.modalActions}>
@@ -495,18 +495,22 @@ export default function PerfilProfessor() {
 const styles = {
   container: {
     maxWidth: '900px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px' // Adicionado padding para telas menores
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -517,7 +521,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -531,7 +536,8 @@ const styles = {
   },
   headerActions: {
     display: 'flex',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   editButton: {
     padding: '12px 24px',
@@ -540,7 +546,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   cancelButton: {
     padding: '12px 24px',
@@ -548,7 +555,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   saveButton: {
     display: 'flex',
@@ -560,7 +568,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   profileCard: {
     backgroundColor: 'white',
@@ -587,7 +596,8 @@ const styles = {
     gap: '20px'
   },
   formGroup: {
-    marginBottom: '5px'
+    marginBottom: '5px',
+    minWidth: 0 // Importante para evitar overflow em grids
   },
   label: {
     display: 'block',
@@ -602,7 +612,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   inputDisabled: {
     backgroundColor: '#f9fafb',
@@ -617,7 +628,9 @@ const styles = {
     borderRadius: '6px',
     fontSize: '13px',
     outline: 'none',
-    fontFamily: 'inherit'
+    fontFamily: 'inherit',
+    boxSizing: 'border-box',
+    resize: 'vertical'
   },
   materiasList: {
     display: 'flex',
@@ -638,7 +651,9 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
     padding: '2px',
-    color: '#6b7280'
+    color: '#6b7280',
+    display: 'flex',
+    alignItems: 'center'
   },
   addMateria: {
     marginTop: '10px'
@@ -649,7 +664,8 @@ const styles = {
     borderRadius: '20px',
     fontSize: '13px',
     outline: 'none',
-    width: '200px'
+    width: '200px',
+    boxSizing: 'border-box'
   },
   redeSocialItem: {
     display: 'flex',
@@ -658,19 +674,28 @@ const styles = {
     padding: '10px',
     backgroundColor: '#f9fafb',
     borderRadius: '6px',
-    marginBottom: '8px'
+    marginBottom: '8px',
+    flexWrap: 'wrap'
+  },
+  redeUrl: {
+    flex: 1,
+    fontSize: '13px',
+    color: '#4b5563',
+    wordBreak: 'break-all'
   },
   removeRede: {
     marginLeft: 'auto',
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    color: '#dc2626'
+    color: '#dc2626',
+    flexShrink: 0
   },
   addRedeSocial: {
     display: 'flex',
     gap: '10px',
-    marginTop: '10px'
+    marginTop: '10px',
+    flexWrap: 'wrap'
   },
   redeSelect: {
     width: '120px',
@@ -678,15 +703,18 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    flexShrink: 0
   },
   redeInput: {
     flex: 1,
+    minWidth: '200px',
     padding: '8px 12px',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   addRedeButton: {
     width: '40px',
@@ -698,7 +726,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   dangerZone: {
     marginTop: '20px',
@@ -714,7 +743,13 @@ const styles = {
   dangerContent: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '15px'
+  },
+  dangerText: {
+    flex: 1,
+    minWidth: '250px'
   },
   dangerButton: {
     padding: '10px 20px',
@@ -722,7 +757,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalOverlay: {
     position: 'fixed',
@@ -741,7 +777,8 @@ const styles = {
     borderRadius: '12px',
     padding: '25px',
     maxWidth: '500px',
-    width: '90%'
+    width: '90%',
+    margin: '15px'
   },
   modalTitle: {
     fontSize: '18px',
@@ -757,14 +794,16 @@ const styles = {
   modalActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   modalCancel: {
     padding: '10px 20px',
     backgroundColor: 'white',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalConfirm: {
     padding: '10px 20px',
@@ -772,6 +811,7 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   }
 };

@@ -4,8 +4,7 @@ import Layout from '../../components/Layout';
 import RankingCard from '../../components/RankingCard';
 import ConquistaCard from '../../components/ConquistaCard';
 import { 
-  ArrowLeft, Award, Trophy, Star, TrendingUp, 
-  Users, Eye, Calendar, Medal, Target
+  ArrowLeft, Award, Trophy, Star, Eye
 } from 'lucide-react';
 
 export default function DesempenhoPai() {

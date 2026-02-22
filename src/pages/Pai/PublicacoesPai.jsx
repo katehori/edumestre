@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PublicacaoCard from '../../components/PublicacaoCard';
-import { 
+import {
   ArrowLeft, Search, Eye,
   Users, BookOpen, Calendar
 } from 'lucide-react';
@@ -69,7 +69,6 @@ export default function PublicacoesPai() {
         data: '3 dias atrás',
         likes: 12,
         comentarios: [],
-        usuarioCurtiu: false,
         midias: [],
         visualizacoes: 34
       },
@@ -78,7 +77,7 @@ export default function PublicacoesPai() {
 
   const filtrarPublicacoes = publicacoes.filter(pub => {
     const matchesSearch = pub.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         pub.conteudo.toLowerCase().includes(searchTerm.toLowerCase());
+      pub.conteudo.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilho = filterFilho === 'todos' || pub.aluno === filterFilho;
     return matchesSearch && matchesFilho;
   });
@@ -103,14 +102,14 @@ export default function PublicacoesPai() {
         <div style={styles.avisoCard}>
           <Eye size={18} />
           <span>
-            Você está no modo <strong>visualização</strong>. Pode ver todas as publicações, 
+            Você está no modo <strong>visualização</strong>. Pode ver todas as publicações,
             comentários e curtidas, mas não pode interagir.
           </span>
         </div>
 
-        {/* Busca e Filtros */}
-        <div style={styles.searchSection}>
-          <div style={styles.searchBox}>
+        {/* Busca e Filtros - CORRIGIDO */}
+        <div style={styles.searchContainer}>
+          <div style={styles.searchWrapper}>
             <Search size={18} color="#9ca3af" style={styles.searchIcon} />
             <input
               type="text"
@@ -120,7 +119,7 @@ export default function PublicacoesPai() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <select 
+          <select
             style={styles.filterSelect}
             value={filterFilho}
             onChange={(e) => setFilterFilho(e.target.value)}
@@ -219,15 +218,19 @@ export default function PublicacoesPai() {
 const styles = {
   container: {
     maxWidth: '900px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px' // Adicionado padding para telas menores
   },
   header: {
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -238,7 +241,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -259,30 +263,38 @@ const styles = {
     borderRadius: '8px',
     color: '#92400e',
     fontSize: '13px',
-    marginBottom: '20px'
+    marginBottom: '20px',
+    flexWrap: 'wrap'
   },
-  searchSection: {
+  // CORREÇÃO PRINCIPAL: Container da busca com flexbox
+  searchContainer: {
     display: 'flex',
     gap: '10px',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    width: '100%',
+    flexWrap: 'wrap'
   },
-  searchBox: {
+  // Wrapper para o input ocupar o espaço disponível
+  searchWrapper: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    minWidth: '250px' // Largura mínima para o input
   },
   searchIcon: {
     position: 'absolute',
     left: '12px',
     top: '50%',
-    transform: 'translateY(-50%)'
+    transform: 'translateY(-50%)',
+    zIndex: 1
   },
   searchInput: {
     width: '100%',
-    padding: '12px 40px',
+    padding: '12px 12px 12px 40px',
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     fontSize: '14px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   filterSelect: {
     padding: '0 20px',
@@ -291,7 +303,11 @@ const styles = {
     fontSize: '14px',
     outline: 'none',
     cursor: 'pointer',
-    minWidth: '150px'
+    minWidth: '150px',
+    height: '45px',
+    flexShrink: 0,
+    backgroundColor: 'white',
+    boxSizing: 'border-box'
   },
   statsGrid: {
     display: 'grid',
@@ -306,7 +322,8 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
+    boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+    flexWrap: 'wrap'
   },
   statValue: {
     fontSize: '20px',
@@ -337,7 +354,11 @@ const styles = {
     backgroundColor: '#3b82f6',
     color: 'white',
     borderRadius: '20px',
-    fontSize: '11px'
+    fontSize: '11px',
+    maxWidth: '200px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   },
   emptyState: {
     textAlign: 'center',
