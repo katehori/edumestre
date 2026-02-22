@@ -82,7 +82,7 @@ export default function ComunidadeProfessores() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>👥 Comunidade de Professores</h2>
+              <h2 style={styles.title}>Comunidade de professores</h2>
               <p style={styles.subtitle}>Compartilhe materiais, planejamentos e ideias com outros educadores</p>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default function ComunidadeProfessores() {
 
         {/* Materiais Recentes */}
         <div style={styles.recentesSection}>
-          <h3 style={styles.sectionTitle}>📄 Materiais Recentes</h3>
+          <h3 style={styles.sectionTitle}>Materiais recentes</h3>
           <div style={styles.materiaisGrid}>
             {materiaisRecentes.map(material => (
               <div key={material.id} style={styles.materialCard}>
@@ -233,7 +233,7 @@ export default function ComunidadeProfessores() {
 
         {/* Seção de Templates */}
         <div style={styles.templatesSection}>
-          <h3 style={styles.sectionTitle}>📋 Templates Populares</h3>
+          <h3 style={styles.sectionTitle}>Templates populares</h3>
           <div style={styles.templatesGrid}>
             <div style={styles.templateCard}>
               <Award size={24} color="#f59e0b" />

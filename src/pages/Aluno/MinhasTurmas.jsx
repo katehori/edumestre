@@ -72,7 +72,7 @@ export default function MinhasTurmas() {
         {/* Header */}
         <div style={styles.header}>
           <div>
-            <h2 style={styles.title}>📚 Minhas Turmas</h2>
+            <h2 style={styles.title}>Minhas turmas</h2>
             <p style={styles.subtitle}>Acompanhe suas turmas e atividades</p>
           </div>
           <button style={styles.joinButton} onClick={() => setShowJoinModal(true)}>

@@ -111,7 +111,7 @@ export default function AlunoCadastro() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📝 Cadastro do Aluno</h2>
+              <h2 style={styles.title}>Cadastro do Aluno</h2>
               <p style={styles.subtitle}>Preencha seus dados para começar a usar o EduMestre</p>
             </div>
           </div>

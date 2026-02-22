@@ -125,16 +125,9 @@ export default function CalendarioAluno() {
           </div>
         </div>
 
-        {/* Calendário */}
-        <Calendario 
-          eventos={eventos} 
-          onEventClick={handleEventClick}
-          perfil="aluno"
-        />
-
         {/* Próximas Entregas */}
         <div style={styles.proximosSection}>
-          <h3 style={styles.sectionTitle}>⏰ Próximas Entregas</h3>
+          <h3 style={styles.sectionTitle}>Próximas entregas</h3>
           <div style={styles.proximosLista}>
             {eventos
               .filter(e => e.status === 'pendente')
@@ -172,6 +165,13 @@ export default function CalendarioAluno() {
             Clique em qualquer data no calendário para ver os eventos do dia
           </span>
         </div>
+
+        {/* Calendário */}
+        <Calendario 
+          eventos={eventos} 
+          onEventClick={handleEventClick}
+          perfil="aluno"
+        />
       </div>
 
       {/* Modal de Visualização de Evento */}
@@ -339,6 +339,7 @@ const styles = {
     marginTop: '2px'
   },
   dicaCard: {
+    marginBottom: '25px',
     display: 'flex',
     alignItems: 'center',
     gap: '10px',

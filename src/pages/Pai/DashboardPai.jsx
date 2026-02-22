@@ -61,7 +61,8 @@ export default function DashboardPai() {
       {/* Header */}
       <div style={styles.header}>
         <div>
-          <h2 style={styles.welcomeTitle}>👨‍👩‍👧‍👦 Olá, Sr. Carlos</h2>
+          <h2 style={styles.welcomeTitle}>Olá, Sr. Carlos
+</h2>
           <p style={styles.welcomeText}>Acompanhe o desenvolvimento dos seus filhos</p>
         </div>
       </div>
@@ -181,7 +182,7 @@ export default function DashboardPai() {
 
       {/* Avisos importantes */}
       <div style={styles.avisosSection}>
-        <h3 style={styles.sectionTitle}>⚠️ Avisos importantes</h3>
+        <h3 style={styles.sectionTitle}>Avisos importantes</h3>
         <div style={styles.avisoCard}>
           <AlertCircle size={20} color="#dc2626" />
           <div style={styles.avisoContent}>
@@ -211,7 +212,7 @@ export default function DashboardPai() {
       {/* NOVA SEÇÃO: Atividades Recentes */}
       <div style={styles.atividadesSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📚 Atividades Recentes</h3>
+          <h3 style={styles.sectionTitle}>Atividades Recentes</h3>
           <button 
             style={styles.verTodosBtn}
             onClick={() => navigate('/pai/atividades')}
@@ -249,7 +250,7 @@ export default function DashboardPai() {
       {/* Publicações Recentes */}
       <div style={styles.publicacoesSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📢 Publicações Recentes</h3>
+          <h3 style={styles.sectionTitle}>Publicações recentes</h3>
           <button 
             style={styles.verTodosBtn}
             onClick={() => navigate('/pai/publicacoes')}
@@ -285,7 +286,7 @@ export default function DashboardPai() {
 
       {/* Resumo Geral */}
       <div style={styles.resumoSection}>
-        <h3 style={styles.sectionTitle}>📊 Resumo Geral</h3>
+        <h3 style={styles.sectionTitle}>Resumo geral</h3>
         <div style={styles.resumoGrid}>
           <div style={styles.resumoCard}>
             <div style={{ ...styles.resumoIcon, backgroundColor: '#3b82f620', color: '#3b82f6' }}>
@@ -347,7 +348,7 @@ export default function DashboardPai() {
       {/* Seção do Calendário - NOVA */}
       <div style={styles.calendarioSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📅 Próximos Eventos</h3>
+          <h3 style={styles.sectionTitle}>Próximos eventos</h3>
           <button 
             style={styles.verTodosBtn}
             onClick={() => navigate('/pai/calendario')}

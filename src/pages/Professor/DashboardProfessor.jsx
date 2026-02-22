@@ -33,7 +33,7 @@ export default function DashboardProfessor() {
       {/* Boas-vindas */}
       <div style={styles.welcome}>
         <div>
-          <h2 style={styles.welcomeTitle}>Olá, Prof. Carlos! 👋</h2>
+          <h2 style={styles.welcomeTitle}>Olá, Prof. Carlos!</h2>
           <p style={styles.welcomeText}>Acompanhe o resumo das suas atividades</p>
         </div>
         <div style={styles.dateBox}>
@@ -114,46 +114,11 @@ export default function DashboardProfessor() {
         </div>
       </div>
 
-      {/* Seção de Publicações Recentes */}
-      <div style={styles.publicacoesSection}>
-        <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📢 Publicações Recentes</h3>
-          <button 
-            style={styles.verTodosBtn}
-            onClick={() => navigate('/professor/publicacoes')}
-          >
-            Ver todas
-          </button>
-        </div>
-        <div style={styles.publicacoesList}>
-          {publicacoesRecentes.map(pub => (
-            <div 
-              key={pub.id} 
-              style={styles.publicacaoItem}
-              onClick={() => navigate('/professor/publicacoes')}
-            >
-              <div style={styles.publicacaoInfo}>
-                <strong>{pub.titulo}</strong>
-                <span style={styles.publicacaoTurma}>{pub.turma}</span>
-              </div>
-              <div style={styles.publicacaoStats}>
-                <span style={styles.publicacaoStat}>
-                  <MessageCircle size={14} /> {pub.comentarios}
-                </span>
-                <span style={styles.publicacaoStat}>
-                  <Heart size={14} color="#ef4444" /> {pub.curtidas}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Destaque: Comunidade de Professores */}
+       {/* Destaque: Comunidade de Professores */}
       <div style={styles.destaqueSection}>
         <div style={styles.destaqueContent}>
           <div>
-            <h3 style={styles.destaqueTitle}>👥 Comunidade de Professores</h3>
+            <h3 style={styles.destaqueTitle}>Comunidade de professores</h3>
             <p style={styles.destaqueText}>
               Compartilhe materiais, planejamentos e ideias com outros educadores
             </p>
@@ -172,10 +137,41 @@ export default function DashboardProfessor() {
         </div>
       </div>
 
+      {/* Seção do Calendário - NOVA */}
+      <div style={styles.calendarioSection}>
+        <div style={styles.sectionHeader}>
+          <h3 style={styles.sectionTitle}>Hoje no calendário</h3>
+          <button 
+            style={styles.verTodosBtn}
+            onClick={() => navigate('/professor/calendario')}
+          >
+            Ver calendário completo
+          </button>
+        </div>
+        <div style={styles.eventosHojeLista}>
+          {eventosHoje.map(evento => (
+            <div 
+              key={evento.id} 
+              style={styles.eventoHojeItem}
+              onClick={() => navigate('/professor/calendario')}
+            >
+              <CalendarIcon size={16} color="#f59e0b" />
+              <div style={styles.eventoHojeInfo}>
+                <strong>{evento.titulo}</strong>
+                <span>{evento.turma} • {evento.hora}</span>
+              </div>
+            </div>
+          ))}
+          {eventosHoje.length === 0 && (
+            <p style={styles.semEventos}>Nenhum evento programado para hoje</p>
+          )}
+        </div>
+      </div>
+
       {/* Links rápidos para turmas */}
       <div style={styles.turmasSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📚 Minhas Turmas</h3>
+          <h3 style={styles.sectionTitle}>Minhas turmas</h3>
           <button 
             style={styles.verTodosBtn}
             onClick={() => navigate('/professor/turmas')}
@@ -208,34 +204,38 @@ export default function DashboardProfessor() {
         </div>
       </div>
 
-      {/* Seção do Calendário - NOVA */}
-      <div style={styles.calendarioSection}>
+      {/* Seção de Publicações Recentes */}
+      <div style={styles.publicacoesSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📅 Hoje no Calendário</h3>
+          <h3 style={styles.sectionTitle}>Publicações recentes</h3>
           <button 
             style={styles.verTodosBtn}
-            onClick={() => navigate('/professor/calendario')}
+            onClick={() => navigate('/professor/publicacoes')}
           >
-            Ver calendário completo
+            Ver todas
           </button>
         </div>
-        <div style={styles.eventosHojeLista}>
-          {eventosHoje.map(evento => (
+        <div style={styles.publicacoesList}>
+          {publicacoesRecentes.map(pub => (
             <div 
-              key={evento.id} 
-              style={styles.eventoHojeItem}
-              onClick={() => navigate('/professor/calendario')}
+              key={pub.id} 
+              style={styles.publicacaoItem}
+              onClick={() => navigate('/professor/publicacoes')}
             >
-              <CalendarIcon size={16} color="#f59e0b" />
-              <div style={styles.eventoHojeInfo}>
-                <strong>{evento.titulo}</strong>
-                <span>{evento.turma} • {evento.hora}</span>
+              <div style={styles.publicacaoInfo}>
+                <strong>{pub.titulo}</strong>
+                <span style={styles.publicacaoTurma}>{pub.turma}</span>
+              </div>
+              <div style={styles.publicacaoStats}>
+                <span style={styles.publicacaoStat}>
+                  <MessageCircle size={14} /> {pub.comentarios}
+                </span>
+                <span style={styles.publicacaoStat}>
+                  <Heart size={14} color="#ef4444" /> {pub.curtidas}
+                </span>
               </div>
             </div>
           ))}
-          {eventosHoje.length === 0 && (
-            <p style={styles.semEventos}>Nenhum evento programado para hoje</p>
-          )}
         </div>
       </div>
     </Layout>

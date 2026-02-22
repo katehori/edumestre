@@ -117,7 +117,7 @@ export default function ResponsavelCadastro() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📝 Cadastro do Responsável</h2>
+              <h2 style={styles.title}>Cadastro do Responsável</h2>
               <p style={styles.subtitle}>Cadastre-se para acompanhar a vida escolar dos seus filhos</p>
             </div>
           </div>

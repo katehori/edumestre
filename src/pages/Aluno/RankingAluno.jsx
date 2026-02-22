@@ -66,7 +66,7 @@ export default function RankingAluno() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>🏆 Ranking</h2>
+              <h2 style={styles.title}>Ranking</h2>
               <p style={styles.subtitle}>Veja sua posição e compare com outros alunos</p>
             </div>
           </div>
@@ -99,6 +99,29 @@ export default function RankingAluno() {
                 <span style={styles.statLabel}>Pontos Totais</span>
                 <strong style={styles.statValue}>{stats.pontos} pts</strong>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Estatísticas Adicionais */}
+        <div style={styles.statsSection}>
+          <h3 style={styles.statsTitulo}>Estatísticas</h3>
+          <div style={styles.statsGrid}>
+            <div style={styles.statCard}>
+              <span style={styles.statCardLabel}>Média Geral</span>
+              <strong style={styles.statCardValue}>{stats.media}</strong>
+            </div>
+            <div style={styles.statCard}>
+              <span style={styles.statCardLabel}>Atividades</span>
+              <strong style={styles.statCardValue}>{alunoAtual.atividades}</strong>
+            </div>
+            <div style={styles.statCard}>
+              <span style={styles.statCardLabel}>Conquistas</span>
+              <strong style={styles.statCardValue}>{stats.conquistas}</strong>
+            </div>
+            <div style={styles.statCard}>
+              <span style={styles.statCardLabel}>Progresso</span>
+              <strong style={styles.statCardValue}>+15%</strong>
             </div>
           </div>
         </div>
@@ -159,29 +182,6 @@ export default function RankingAluno() {
                 isCurrentUser={aluno.isCurrentUser}
               />
             ))}
-          </div>
-        </div>
-
-        {/* Estatísticas Adicionais */}
-        <div style={styles.statsSection}>
-          <h3 style={styles.statsTitulo}>📊 Estatísticas</h3>
-          <div style={styles.statsGrid}>
-            <div style={styles.statCard}>
-              <span style={styles.statCardLabel}>Média Geral</span>
-              <strong style={styles.statCardValue}>{stats.media}</strong>
-            </div>
-            <div style={styles.statCard}>
-              <span style={styles.statCardLabel}>Atividades</span>
-              <strong style={styles.statCardValue}>{alunoAtual.atividades}</strong>
-            </div>
-            <div style={styles.statCard}>
-              <span style={styles.statCardLabel}>Conquistas</span>
-              <strong style={styles.statCardValue}>{stats.conquistas}</strong>
-            </div>
-            <div style={styles.statCard}>
-              <span style={styles.statCardLabel}>Progresso</span>
-              <strong style={styles.statCardValue}>+15%</strong>
-            </div>
           </div>
         </div>
       </div>
@@ -320,6 +320,7 @@ const styles = {
     boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
   },
   statsSection: {
+    marginBottom: '30px',
     marginTop: '20px'
   },
   statsTitulo: {

@@ -98,7 +98,7 @@ export default function Turmas() {
             <ArrowLeft size={20} />
           </button>
           <div>
-            <h2 style={styles.title}>📚 Minhas Turmas</h2>
+            <h2 style={styles.title}>Minhas turmas</h2>
             <p style={styles.subtitle}>Gerencie suas turmas e acompanhe o progresso dos alunos</p>
           </div>
         </div>
@@ -272,7 +272,7 @@ export default function Turmas() {
       {/* Comunidade de Professores */}
       <div style={styles.professoresSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>👥 Comunidade de Professores</h3>
+          <h3 style={styles.sectionTitle}>Comunidade de professores</h3>
           <button
             style={styles.verTodosBtn}
             onClick={(e) => {

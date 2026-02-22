@@ -86,7 +86,7 @@ export default function PerfilPai() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>👤 Meu Perfil</h2>
+              <h2 style={styles.title}>Meu perfil</h2>
               <p style={styles.subtitle}>Gerencie suas informações pessoais</p>
             </div>
           </div>

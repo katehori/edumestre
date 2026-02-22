@@ -180,7 +180,7 @@ export default function Atividades() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📚 Atividades e Provas</h2>
+              <h2 style={styles.title}>Atividades e provas</h2>
               <p style={styles.subtitle}>Gerencie atividades, exercícios e avaliações</p>
             </div>
           </div>

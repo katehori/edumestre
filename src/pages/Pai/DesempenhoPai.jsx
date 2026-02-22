@@ -123,7 +123,7 @@ export default function DesempenhoPai() {
       case 'notas':
         return (
           <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>📝 Boletim de Notas</h3>
+            <h3 style={styles.sectionTitle}>Boletim de notas</h3>
             <div style={styles.notasGrid}>
               <div style={styles.notaCard}>
                 <h4>Matemática</h4>
@@ -165,7 +165,7 @@ export default function DesempenhoPai() {
         return (
           <div style={styles.section}>
             <div style={styles.sectionHeader}>
-              <h3 style={styles.sectionTitle}>🏆 Ranking da Turma</h3>
+              <h3 style={styles.sectionTitle}>Ranking da Turma</h3>
               <select
                 style={styles.periodoSelect}
                 value={periodo}
@@ -192,7 +192,7 @@ export default function DesempenhoPai() {
       case 'conquistas':
         return (
           <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>⭐ Conquistas</h3>
+            <h3 style={styles.sectionTitle}>Conquistas</h3>
             <div style={styles.conquistasLista}>
               {conquistasAtuais.map(conquista => (
                 <ConquistaCard
@@ -221,7 +221,7 @@ export default function DesempenhoPai() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📊 Desempenho Escolar</h2>
+              <h2 style={styles.title}>Desempenho escolar</h2>
               <p style={styles.subtitle}>Acompanhe notas, ranking e conquistas dos seus filhos</p>
             </div>
           </div>

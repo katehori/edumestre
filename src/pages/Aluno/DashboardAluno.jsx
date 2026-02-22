@@ -43,7 +43,7 @@ export default function DashboardAluno() {
       {/* Header com pontos */}
       <div style={styles.header}>
         <div style={styles.welcome}>
-          <h2 style={styles.welcomeTitle}>Olá, João! 👋</h2>
+          <h2 style={styles.welcomeTitle}>Olá, João!</h2>
           <p style={styles.welcomeText}>Bom dia! Pronto para aprender hoje?</p>
         </div>
         <div
@@ -107,7 +107,7 @@ export default function DashboardAluno() {
           {/* Minhas Turmas */}
           <div style={styles.card}>
             <div style={styles.cardHeader}>
-              <h3 style={styles.cardTitle}>📚 Minhas Turmas</h3>
+              <h3 style={styles.cardTitle}>Minhas turmas</h3>
               <button 
                 style={styles.verTodos}
                 onClick={() => navigate('/aluno/turmas')}
@@ -136,7 +136,7 @@ export default function DashboardAluno() {
           {/* Publicações Recentes */}
           <div style={styles.card}>
             <div style={styles.cardHeader}>
-              <h3 style={styles.cardTitle}>📢 Publicações Recentes</h3>
+              <h3 style={styles.cardTitle}>Publicações recentes</h3>
               <button 
                 style={styles.verTodos}
                 onClick={() => navigate('/aluno/publicacoes')}
@@ -171,7 +171,7 @@ export default function DashboardAluno() {
           {/* Próximas atividades */}
           <div style={styles.card}>
             <div style={styles.cardHeader}>
-              <h3 style={styles.cardTitle}>📚 Próximas Atividades</h3>
+              <h3 style={styles.cardTitle}>Próximas atividades</h3>
               <button 
                 style={styles.verTodos}
                 onClick={() => navigate('/aluno/turmas')}
@@ -251,7 +251,7 @@ export default function DashboardAluno() {
               style={styles.cardTitle}
               onClick={() => navigate('/aluno/conquistas')}
             >
-              ⭐ Próximas Conquistas
+              Próximas conquistas
             </h3>
             {conquistas.map(conq => (
               <div key={conq.id} style={styles.conquistaItem}>
@@ -277,7 +277,7 @@ export default function DashboardAluno() {
        {/* Seção do Calendário - NOVA */}
       <div style={styles.calendarioSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>📅 Próximos Eventos</h3>
+          <h3 style={styles.sectionTitle}>Próximos eventos</h3>
           <button 
             style={styles.verTodosBtn}
             onClick={() => navigate('/aluno/calendario')}

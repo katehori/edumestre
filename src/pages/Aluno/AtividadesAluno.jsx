@@ -116,6 +116,24 @@ export default function AtividadesAluno() {
           </div>
         </div>
 
+        {/* Calendário resumido */}
+        <div style={styles.calendarioCard}>
+          <h3 style={styles.calendarioTitle}>Próximas entregas</h3>
+          <div style={styles.proximasLista}>
+            {atividades
+              .filter(a => a.status === 'pendente')
+              .slice(0, 3)
+              .map(ativ => (
+                <div key={ativ.id} style={styles.proximaItem}>
+                  <Calendar size={14} color="#3b82f6" />
+                  <span style={styles.proximaData}>{ativ.dataLimite}</span>
+                  <span style={styles.proximaTitulo}>{ativ.titulo}</span>
+                  <span style={styles.proximaDisciplina}>{ativ.disciplina}</span>
+                </div>
+              ))}
+          </div>
+        </div>
+
         {/* Busca e Filtros */}
         <div style={styles.searchSection}>
           <div style={styles.searchBox}>
@@ -164,24 +182,6 @@ export default function AtividadesAluno() {
               <p>Nenhuma atividade encontrada</p>
             </div>
           )}
-        </div>
-
-        {/* Calendário resumido */}
-        <div style={styles.calendarioCard}>
-          <h3 style={styles.calendarioTitle}>📅 Próximas entregas</h3>
-          <div style={styles.proximasLista}>
-            {atividades
-              .filter(a => a.status === 'pendente')
-              .slice(0, 3)
-              .map(ativ => (
-                <div key={ativ.id} style={styles.proximaItem}>
-                  <Calendar size={14} color="#3b82f6" />
-                  <span style={styles.proximaData}>{ativ.dataLimite}</span>
-                  <span style={styles.proximaTitulo}>{ativ.titulo}</span>
-                  <span style={styles.proximaDisciplina}>{ativ.disciplina}</span>
-                </div>
-              ))}
-          </div>
         </div>
       </div>
     </Layout>
@@ -289,6 +289,7 @@ const styles = {
     color: '#6b7280'
   },
   calendarioCard: {
+    marginBottom: '25px',
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '20px',

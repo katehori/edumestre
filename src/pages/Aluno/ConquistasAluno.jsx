@@ -109,7 +109,7 @@ export default function ConquistasAluno() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>⭐ Conquistas</h2>
+              <h2 style={styles.title}>Conquistas</h2>
               <p style={styles.subtitle}>Desbloqueie troféus e ganhe pontos</p>
             </div>
           </div>

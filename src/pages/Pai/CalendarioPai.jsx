@@ -184,16 +184,9 @@ export default function CalendarioPai() {
           </select>
         </div>
 
-        {/* Calendário */}
-        <Calendario 
-          eventos={filtrarEventos} 
-          onEventClick={handleEventClick}
-          perfil="pai"
-        />
-
         {/* Próximas Entregas */}
         <div style={styles.proximosSection}>
-          <h3 style={styles.sectionTitle}>⏰ Próximas Entregas</h3>
+          <h3 style={styles.sectionTitle}>Próximas entregas</h3>
           <div style={styles.proximosLista}>
             {filtrarEventos
               .filter(e => e.status === 'pendente')
@@ -222,6 +215,13 @@ export default function CalendarioPai() {
               ))}
           </div>
         </div>
+
+        {/* Calendário */}
+        <Calendario 
+          eventos={filtrarEventos} 
+          onEventClick={handleEventClick}
+          perfil="pai"
+        />
       </div>
 
       {/* Modal de Visualização de Evento */}
@@ -383,6 +383,7 @@ const styles = {
     minWidth: '150px'
   },
   proximosSection: {
+    marginBottom: '25px',
     marginTop: '30px'
   },
   sectionTitle: {

@@ -93,7 +93,7 @@ export default function PublicacoesPai() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📢 Acompanhamento Escolar</h2>
+              <h2 style={styles.title}>Acompanhamento escolar</h2>
               <p style={styles.subtitle}>Visualize as publicações feitas pelos professores dos seus filhos</p>
             </div>
           </div>
