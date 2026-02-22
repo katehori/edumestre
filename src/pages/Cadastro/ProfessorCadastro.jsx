@@ -286,7 +286,7 @@ export default function ProfessorCadastro() {
                     name="anoConclusao"
                     placeholder="2020"
                     min="1950"
-                    max="2025"
+                    max="2026"
                     style={styles.input}
                     value={formData.anoConclusao}
                     onChange={handleChange}

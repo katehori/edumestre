@@ -138,7 +138,7 @@ export default function Login() {
       </main>
 
       <footer style={styles.footer}>
-        <p>© 2025 EduMestre - Transformando a educação pública</p>
+        <p>© 2026 EduMestre - Transformando a educação pública</p>
       </footer>
     </div>
   );

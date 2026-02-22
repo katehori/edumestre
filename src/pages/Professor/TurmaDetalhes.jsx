@@ -34,11 +34,11 @@ export default function TurmaDetalhes() {
 
   // Mock de alunos
   const alunos = [
-    { id: 1, nome: 'João Silva', matricula: '2025001', media: 8.5, atividades: 12 },
-    { id: 2, nome: 'Maria Santos', matricula: '2025002', media: 9.2, atividades: 12 },
-    { id: 3, nome: 'Pedro Oliveira', matricula: '2025003', media: 7.8, atividades: 11 },
-    { id: 4, nome: 'Ana Souza', matricula: '2025004', media: 9.5, atividades: 12 },
-    { id: 5, nome: 'Lucas Lima', matricula: '2025005', media: 6.5, atividades: 10 },
+    { id: 1, nome: 'João Silva', matricula: '2026001', media: 8.5, atividades: 12 },
+    { id: 2, nome: 'Maria Santos', matricula: '2026002', media: 9.2, atividades: 12 },
+    { id: 3, nome: 'Pedro Oliveira', matricula: '2026003', media: 7.8, atividades: 11 },
+    { id: 4, nome: 'Ana Souza', matricula: '2026004', media: 9.5, atividades: 12 },
+    { id: 5, nome: 'Lucas Lima', matricula: '2026005', media: 6.5, atividades: 10 },
   ];
 
   // Mock de atividades

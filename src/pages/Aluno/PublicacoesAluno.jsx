@@ -120,7 +120,7 @@ export default function PublicacoesAluno() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📢 Publicações</h2>
+              <h2 style={styles.title}>Publicações</h2>
               <p style={styles.subtitle}>Acompanhe os conteúdos compartilhados pelos seus professores</p>
             </div>
           </div>

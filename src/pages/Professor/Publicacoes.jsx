@@ -255,7 +255,7 @@ export default function Publicacoes() {
               <ArrowLeft size={20} />
             </button>
             <div>
-              <h2 style={styles.title}>📢 Publicações</h2>
+              <h2 style={styles.title}>Publicações</h2>
               <p style={styles.subtitle}>Compartilhe conteúdos, vídeos e materiais com seus alunos</p>
             </div>
           </div>

@@ -36,9 +36,9 @@ export default function CalendarioProfessor() {
 
   // Mock de atividades para vincular
   const atividades = [
-    { id: 1, titulo: 'Exercícios de Frações', turma: '6º Ano A', data: '2025-02-25' },
-    { id: 2, titulo: 'Prova Bimestral', turma: '6º Ano A', data: '2025-02-28' },
-    { id: 3, titulo: 'Lista de Geometria', turma: '7º Ano B', data: '2025-02-26' },
+    { id: 1, titulo: 'Exercícios de Frações', turma: '6º Ano A', data: '2026-02-25' },
+    { id: 2, titulo: 'Prova Bimestral', turma: '6º Ano A', data: '2026-02-28' },
+    { id: 3, titulo: 'Lista de Geometria', turma: '7º Ano B', data: '2026-02-26' },
   ];
 
   // Mock de eventos do calendário
@@ -48,7 +48,7 @@ export default function CalendarioProfessor() {
       titulo: 'Exercícios de Frações',
       descricao: 'Resolver os exercícios 1 a 10 da página 45.',
       tipo: 'atividade',
-      data: '2025-02-25',
+      data: '2026-02-25',
       hora: '23:59',
       turma: '6º Ano A',
       disciplina: 'Matemática',
@@ -61,7 +61,7 @@ export default function CalendarioProfessor() {
       titulo: 'Prova Bimestral - Matemática',
       descricao: 'Conteúdo: frações, números decimais e operações.',
       tipo: 'prova',
-      data: '2025-02-28',
+      data: '2026-02-28',
       hora: '10:00',
       turma: '6º Ano A',
       disciplina: 'Matemática',
@@ -74,7 +74,7 @@ export default function CalendarioProfessor() {
       titulo: 'Lista de Geometria',
       descricao: 'Exercícios sobre áreas e perímetros.',
       tipo: 'atividade',
-      data: '2025-02-26',
+      data: '2026-02-26',
       hora: '23:59',
       turma: '7º Ano B',
       disciplina: 'Matemática',
@@ -87,7 +87,7 @@ export default function CalendarioProfessor() {
       titulo: 'Reunião de Pais',
       descricao: 'Reunião bimestral com os responsáveis.',
       tipo: 'evento',
-      data: '2025-02-27',
+      data: '2026-02-27',
       hora: '19:00',
       turma: '6º Ano A',
       disciplina: 'Geral'
@@ -229,16 +229,9 @@ export default function CalendarioProfessor() {
           </div>
         </div>
 
-        {/* Calendário */}
-        <Calendario 
-          eventos={eventos} 
-          onEventClick={handleEventClick}
-          perfil="professor"
-        />
-
         {/* Eventos Próximos */}
         <div style={styles.proximosSection}>
-          <h3 style={styles.sectionTitle}>📌 Próximos 7 dias</h3>
+          <h3 style={styles.sectionTitle}>Próximos 7 dias</h3>
           <div style={styles.proximosLista}>
             {eventos
               .filter(e => new Date(e.data) >= new Date())
@@ -274,6 +267,13 @@ export default function CalendarioProfessor() {
               ))}
           </div>
         </div>
+
+        {/* Calendário */}
+        <Calendario 
+          eventos={eventos} 
+          onEventClick={handleEventClick}
+          perfil="professor"
+        />
       </div>
 
       {/* Modal de Visualização de Evento */}
@@ -577,6 +577,7 @@ const styles = {
     color: '#1f2937'
   },
   proximosSection: {
+    marginBottom: '30px',
     marginTop: '30px'
   },
   sectionTitle: {

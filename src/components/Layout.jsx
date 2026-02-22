@@ -209,7 +209,7 @@ export default function Layout({ children, perfil, nome, turmaInfo }) {
       {/* FOOTER */}
       <footer style={styles.footer}>
         <div style={styles.footerContent}>
-          <p>© 2025 EduMestre - Plataforma de apoio a professores da rede pública</p>
+          <p>© 2026 EduMestre - Plataforma de apoio a professores da rede pública</p>
           <div style={styles.footerLinks}>
             <span>Sobre</span>
             <span>•</span>

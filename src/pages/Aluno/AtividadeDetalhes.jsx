@@ -22,7 +22,7 @@ export default function AtividadeDetalhes() {
     disciplina: 'Matemática',
     turma: '6º Ano A',
     professor: 'Prof. Carlos Silva',
-    dataLimite: '25/02/2025',
+    dataLimite: '25/02/2026',
     status: 'pendente',
     questoes: [
       { 

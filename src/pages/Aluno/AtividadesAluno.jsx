@@ -22,7 +22,7 @@ export default function AtividadesAluno() {
       tipo: 'atividade',
       turma: '6º Ano A',
       disciplina: 'Matemática',
-      dataLimite: '25/02/2025',
+      dataLimite: '25/02/2026',
       status: 'pendente',
       cor: '#3b82f6'
     },
@@ -33,7 +33,7 @@ export default function AtividadesAluno() {
       tipo: 'prova',
       turma: '6º Ano A',
       disciplina: 'Matemática',
-      dataLimite: '28/02/2025',
+      dataLimite: '28/02/2026',
       status: 'pendente',
       questoes: 5,
       cor: '#f59e0b'
@@ -45,7 +45,7 @@ export default function AtividadesAluno() {
       tipo: 'atividade',
       turma: '6º Ano A',
       disciplina: 'Português',
-      dataLimite: '20/02/2025',
+      dataLimite: '20/02/2026',
       status: 'entregue',
       nota: 8.5,
       cor: '#10b981'
@@ -57,7 +57,7 @@ export default function AtividadesAluno() {
       tipo: 'atividade',
       turma: '6º Ano A',
       disciplina: 'Ciências',
-      dataLimite: '15/02/2025',
+      dataLimite: '15/02/2026',
       status: 'concluida',
       nota: 9.0,
       cor: '#8b5cf6'

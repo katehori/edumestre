@@ -159,7 +159,7 @@ export default function Turmas() {
 
       {/* Ações rápidas */}
       <div style={styles.quickActions}>
-        <h3 style={styles.sectionTitle}>⚡ Ações rápidas</h3>
+        <h3 style={styles.sectionTitle}>Ações rápidas</h3>
         <div style={styles.actionsGrid}>
           <button style={styles.actionCard}>
             <Plus size={20} color="#3b82f6" />
@@ -174,7 +174,7 @@ export default function Turmas() {
 
       {/* Grid de Turmas */}
       <div style={styles.turmasSection}>
-        <h3 style={styles.sectionTitle}>Turmas Ativas</h3>
+        <h3 style={styles.sectionTitle}>Turmas ativas</h3>
         <div style={styles.turmasGrid}>
           {filtrarTurmas.map(turma => (
             <div
@@ -246,19 +246,21 @@ export default function Turmas() {
                     style={styles.footerButton}
                     onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/professor/turma/${turma.id}`);
+                        navigate('/professor/Publicacoes/');
                     }}
                 >
                   <BookOpen size={16} />
                   Publicações
                 </button>
-                <button style={styles.footerButton}>
+                <button
+                  style={styles.footerButton}
+                  onClick={(e) => {
+                      e.stopPropagation();
+                      navigate('/professor/Atividades/');
+                  }}
+                >
                   <Clock size={16} />
                   Atividades
-                </button>
-                <button style={styles.footerButton}>
-                  <Users size={16} />
-                  Alunos
                 </button>
                 <button style={{ ...styles.footerButton, color: '#ef4444' }}>
                   <Trash2 size={16} />
@@ -593,7 +595,7 @@ const styles = {
   },
   turmaFooter: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
+    gridTemplateColumns: 'repeat(3, 1fr)',
     borderTop: '1px solid #e5e7eb'
   },
   footerButton: {

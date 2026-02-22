@@ -25,7 +25,7 @@ export default function PerfilAluno() {
     serie: '6º ano',
     turma: '6º Ano A',
     escola: 'EMEF Professor Carlos',
-    matricula: '2025001',
+    matricula: '2026001',
     responsavel: 'Carlos Silva',
     telefoneResponsavel: '(11) 99876-5432',
     
