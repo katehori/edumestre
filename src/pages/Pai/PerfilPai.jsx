@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AvatarUpload from '../../components/AvatarUpload';
 import { maskPhone, maskCPF, unmask } from '../../utils/masks';
-import { 
-  ArrowLeft, Save, User, Mail, Phone, Calendar, 
+import {
+  ArrowLeft, Save, User, Mail, Phone, Calendar,
   CreditCard, MapPin, Users, Heart, X, Plus
 } from 'lucide-react';
 
@@ -19,15 +19,15 @@ export default function PerfilPai() {
     nomeCompleto: 'Carlos Antonio Silva',
     email: 'carlos.silva@email.com',
     celular: '(11) 99876-5432',
-    dataNascimento: '15/05/1980',
+    dataNascimento: '1980-05-15', // Alterado para formato YYYY-MM-DD para input date
     cpf: '123.456.789-00',
-    
+
     // Localização
     endereco: 'Rua das Flores, 123',
     cidade: 'São Paulo',
     estado: 'SP',
     cep: '01234-567',
-    
+
     // Filhos
     filhos: [
       { id: 1, nome: 'João Silva', turma: '6º Ano A', escola: 'EMEF Professor Carlos' },
@@ -43,14 +43,16 @@ export default function PerfilPai() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     let formattedValue = value;
     if (name === 'celular') {
       formattedValue = maskPhone(value);
     } else if (name === 'cpf') {
       formattedValue = maskCPF(value);
+    } else {
+      formattedValue = value;
     }
-    
+
     setFormData({ ...formData, [name]: formattedValue });
   };
 
@@ -110,7 +112,7 @@ export default function PerfilPai() {
         </div>
 
         {/* Avatar */}
-        <AvatarUpload 
+        <AvatarUpload
           currentAvatar={avatar}
           nome={formData.nomeCompleto}
           onAvatarChange={setAvatar}
@@ -255,7 +257,7 @@ export default function PerfilPai() {
               <Heart size={18} color="#f59e0b" />
               Meus Filhos
             </h3>
-            
+
             {formData.filhos.map(filho => (
               <div key={filho.id} style={styles.filhoItem}>
                 <div style={styles.filhoAvatar}>
@@ -266,7 +268,7 @@ export default function PerfilPai() {
                   <span>{filho.turma} • {filho.escola}</span>
                 </div>
                 {editMode && (
-                  <button 
+                  <button
                     style={styles.removeFilho}
                     onClick={() => removerFilho(filho.id)}
                   >
@@ -316,11 +318,11 @@ export default function PerfilPai() {
           <div style={styles.dangerZone}>
             <h3 style={styles.dangerTitle}>⚠️ Zona de Perigo</h3>
             <div style={styles.dangerContent}>
-              <div>
+              <div style={styles.dangerText}>
                 <strong>Excluir conta</strong>
                 <p>Uma vez excluída, todos os seus dados serão permanentemente removidos.</p>
               </div>
-              <button 
+              <button
                 style={styles.dangerButton}
                 onClick={() => setShowDeleteModal(true)}
               >
@@ -357,22 +359,26 @@ export default function PerfilPai() {
   );
 }
 
-// Reutilizar estilos dos perfis anteriores
+// Estilos corrigidos
 const styles = {
   container: {
     maxWidth: '900px',
-    margin: '0 auto'
+    margin: '0 auto',
+    padding: '0 15px' // Adicionado padding para telas menores
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '25px'
+    marginBottom: '25px',
+    flexWrap: 'wrap',
+    gap: '15px'
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    flexWrap: 'wrap'
   },
   backButton: {
     width: '40px',
@@ -383,7 +389,8 @@ const styles = {
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    flexShrink: 0
   },
   title: {
     fontSize: '24px',
@@ -397,7 +404,8 @@ const styles = {
   },
   headerActions: {
     display: 'flex',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   editButton: {
     padding: '12px 24px',
@@ -406,7 +414,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   cancelButton: {
     padding: '12px 24px',
@@ -414,7 +423,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   saveButton: {
     display: 'flex',
@@ -426,7 +436,8 @@ const styles = {
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '14px'
+    fontSize: '14px',
+    flexShrink: 0
   },
   profileCard: {
     backgroundColor: 'white',
@@ -453,7 +464,8 @@ const styles = {
     gap: '20px'
   },
   formGroup: {
-    marginBottom: '5px'
+    marginBottom: '5px',
+    minWidth: 0 // Importante para evitar overflow em grids
   },
   label: {
     display: 'block',
@@ -468,7 +480,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   inputDisabled: {
     backgroundColor: '#f9fafb',
@@ -483,7 +496,8 @@ const styles = {
     padding: '12px',
     backgroundColor: '#f9fafb',
     borderRadius: '8px',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    flexWrap: 'wrap'
   },
   filhoAvatar: {
     width: '40px',
@@ -495,18 +509,21 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '18px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    flexShrink: 0
   },
   filhoInfo: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    minWidth: '200px'
   },
   removeFilho: {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    color: '#dc2626'
+    color: '#dc2626',
+    flexShrink: 0
   },
   addFilhoSection: {
     marginTop: '20px',
@@ -529,7 +546,8 @@ const styles = {
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
     fontSize: '13px',
-    outline: 'none'
+    outline: 'none',
+    boxSizing: 'border-box'
   },
   addFilhoButton: {
     display: 'flex',
@@ -558,7 +576,13 @@ const styles = {
   dangerContent: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '15px'
+  },
+  dangerText: {
+    flex: 1,
+    minWidth: '250px'
   },
   dangerButton: {
     padding: '10px 20px',
@@ -566,7 +590,8 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalOverlay: {
     position: 'fixed',
@@ -578,14 +603,16 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1000
+    zIndex: 1000,
+    padding: '15px'
   },
   modal: {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '25px',
     maxWidth: '500px',
-    width: '90%'
+    width: '100%',
+    boxSizing: 'border-box'
   },
   modalTitle: {
     fontSize: '18px',
@@ -601,14 +628,16 @@ const styles = {
   modalActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    gap: '10px'
+    gap: '10px',
+    flexWrap: 'wrap'
   },
   modalCancel: {
     padding: '10px 20px',
     backgroundColor: 'white',
     border: '1px solid #e5e7eb',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   },
   modalConfirm: {
     padding: '10px 20px',
@@ -616,6 +645,7 @@ const styles = {
     color: 'white',
     border: 'none',
     borderRadius: '6px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    flexShrink: 0
   }
 };
