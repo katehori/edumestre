@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
   ArrowLeft, Users, BookOpen, FileText, Award, 
-  Search, Filter, Plus, Download, Upload, Star,
-  MessageCircle, Share2, Clock
+  Search, Filter, Plus, Download, Star,
+  Clock
 } from 'lucide-react';
 
 export default function TurmasProfessores() {

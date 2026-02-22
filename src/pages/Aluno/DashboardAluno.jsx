@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  BookOpen, Calendar, Award, Bell, TrendingUp, 
-  Star, Clock, CheckCircle, XCircle, Users,
+  Award, Bell, Clock, CheckCircle, XCircle, Users,
   ChevronRight, QrCode, Heart, MessageCircle, FileText,
   Calendar as CalendarIcon // Adicionar CalendarIcon
 } from 'lucide-react';
@@ -47,7 +46,10 @@ export default function DashboardAluno() {
           <h2 style={styles.welcomeTitle}>Olá, João! 👋</h2>
           <p style={styles.welcomeText}>Bom dia! Pronto para aprender hoje?</p>
         </div>
-        <div style={styles.pointsCard}>
+        <div
+          style={styles.pointsCard}
+          onClick={() => navigate('/aluno/ranking')}
+        >
           <Award size={24} color="#f59e0b" />
           <div>
             <span style={styles.pointsLabel}>Seus pontos</span>
@@ -205,7 +207,12 @@ export default function DashboardAluno() {
         <div style={styles.rightColumn}>
           {/* Ranking */}
           <div style={styles.card}>
-            <h3 style={styles.cardTitle}>🏆 Ranking da Turma</h3>
+            <h3
+              style={styles.cardTitle}
+              onClick={() => navigate('/aluno/ranking')}
+            >
+              🏆 Ranking da Turma
+            </h3>
             <div style={styles.rankingList}>
               <div style={styles.rankingItem}>
                 <span style={styles.rankingPos}>1º</span>
@@ -225,7 +232,7 @@ export default function DashboardAluno() {
             </div>
             <button 
               style={styles.verRankingBtn}
-              onClick={() => navigate('/aluno/turma/1')}
+              onClick={() => navigate('/aluno/ranking')}
             >
               Ver ranking completo
             </button>
@@ -233,7 +240,12 @@ export default function DashboardAluno() {
 
           {/* Conquistas */}
           <div style={styles.card}>
-            <h3 style={styles.cardTitle}>⭐ Próximas Conquistas</h3>
+            <h3
+              style={styles.cardTitle}
+              onClick={() => navigate('/aluno/conquistas')}
+            >
+              ⭐ Próximas Conquistas
+            </h3>
             {conquistas.map(conq => (
               <div key={conq.id} style={styles.conquistaItem}>
                 <span style={styles.conquistaIcone}>{conq.icone}</span>

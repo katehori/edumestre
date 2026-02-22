@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
-import { Plus, Users, QrCode, ArrowLeft, Search, Filter, MoreVertical, Copy, Check, Clock, BookOpen, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Users, QrCode, ArrowLeft, Search, Filter, MoreVertical, Copy, Check, Clock, BookOpen, Trash2 } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 export default function Turmas() {
@@ -157,6 +157,21 @@ export default function Turmas() {
         </div>
       </div>
 
+      {/* Ações rápidas */}
+      <div style={styles.quickActions}>
+        <h3 style={styles.sectionTitle}>⚡ Ações rápidas</h3>
+        <div style={styles.actionsGrid}>
+          <button style={styles.actionCard}>
+            <Plus size={20} color="#3b82f6" />
+            <span>Criar atividade para todas as turmas</span>
+          </button>
+          <button style={styles.actionCard}>
+            <Users size={20} color="#f59e0b" />
+            <span>Convidar professores</span>
+          </button>
+        </div>
+      </div>
+
       {/* Grid de Turmas */}
       <div style={styles.turmasSection}>
         <h3 style={styles.sectionTitle}>Turmas Ativas</h3>
@@ -165,10 +180,12 @@ export default function Turmas() {
             <div
               key={turma.id}
               style={styles.turmaCard}
-              onClick={() => navigate(`/professor/turma/${turma.id}`)}
             >
               <div style={{ ...styles.turmaHeader, backgroundColor: turma.cor + '10', borderLeft: `4px solid ${turma.cor}` }}>
-                <div style={styles.turmaHeaderContent}>
+                <div
+                  style={styles.turmaHeaderContent}
+                  onClick={() => navigate(`/professor/turma/${turma.id}`)}
+                >
                   <div>
                     <h4 style={styles.turmaNome}>{turma.nome}</h4>
                     <span style={styles.turmaMateria}>{turma.materia}</span>
@@ -255,11 +272,19 @@ export default function Turmas() {
         </div>
       </div>
 
-      {/* Turmas de Professores */}
+      {/* Comunidade de Professores */}
       <div style={styles.professoresSection}>
         <div style={styles.sectionHeader}>
-          <h3 style={styles.sectionTitle}>👥 Turmas de Professores</h3>
-          <button style={styles.verTodosBtn}>Ver todos</button>
+          <h3 style={styles.sectionTitle}>👥 Comunidade de Professores</h3>
+          <button
+            style={styles.verTodosBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate('/professor/comunidade');
+            }}
+          >
+              Ver todos
+          </button>
         </div>
         <p style={styles.sectionDescription}>Espaços colaborativos para compartilhamento de materiais e planejamentos</p>
         
@@ -287,31 +312,18 @@ export default function Turmas() {
                   ))}
                 </div>
 
-                <button style={styles.solicitarBtn}>
+                <button
+                  style={styles.solicitarBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/professor/comunidade/${turma.id}`);
+                  }}
+                >
                   Solicitar acesso
                 </button>
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Ações rápidas */}
-      <div style={styles.quickActions}>
-        <h3 style={styles.sectionTitle}>⚡ Ações rápidas</h3>
-        <div style={styles.actionsGrid}>
-          <button style={styles.actionCard}>
-            <Plus size={20} color="#3b82f6" />
-            <span>Criar atividade para todas as turmas</span>
-          </button>
-          <button style={styles.actionCard}>
-            <QrCode size={20} color="#10b981" />
-            <span>Gerar relatório de acesso</span>
-          </button>
-          <button style={styles.actionCard}>
-            <Users size={20} color="#f59e0b" />
-            <span>Convidar professores</span>
-          </button>
         </div>
       </div>
     </Layout>
@@ -666,7 +678,8 @@ const styles = {
     transition: 'all 0.3s'
   },
   quickActions: {
-    marginTop: '40px'
+    marginTop: '40px',
+    marginBottom: '40px'
   },
   actionsGrid: {
     display: 'grid',

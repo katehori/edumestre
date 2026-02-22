@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  BookOpen, Users, Calendar, MessageSquare, QrCode, 
-  TrendingUp, Clock, CheckCircle, Users2, Share2,
+  Users, Calendar, TrendingUp, Clock, Users2, Share2,
   FileText, Heart, MessageCircle, Calendar as CalendarIcon // Adicionar CalendarIcon
 } from 'lucide-react';
 
@@ -15,8 +14,6 @@ export default function DashboardProfessor() {
         { icon: <FileText size={24} />, label: 'Publicações', path: '/professor/publicacoes', color: '#10b981', count: 23 },
         { icon: <CalendarIcon size={24} />, label: 'Calendário', path: '/professor/calendario', color: '#f59e0b', count: 5 }, // NOVO
         { icon: <Clock size={24} />, label: 'Atividades', path: '/professor/atividades', color: '#f59e0b', count: 12 },
-        { icon: <MessageSquare size={24} />, label: 'WhatsApp', path: '/professor/whatsapp', color: '#25D366', count: 3 },
-        { icon: <QrCode size={24} />, label: 'QR Codes', path: '/professor/qrcode', color: '#8b5cf6', isNew: true },
     ];
 
   // Mock de publicações recentes
@@ -507,19 +504,6 @@ const styles = {
   },
   turmasSection: {
     marginBottom: '30px'
-  },
-  sectionHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '15px'
-  },
-  verTodosBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#3b82f6',
-    cursor: 'pointer',
-    fontSize: '14px'
   },
   turmasMiniGrid: {
     display: 'grid',
