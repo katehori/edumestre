@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  Users, Eye, Bell, TrendingUp, Calendar, Award, 
+  Eye, Bell, TrendingUp, Calendar, Award,
   Clock, AlertCircle, FileText, Heart, MessageCircle,
   ChevronRight, BookOpen, Calendar as CalendarIcon // Adicionar CalendarIcon
 } from 'lucide-react';
@@ -64,21 +64,18 @@ export default function DashboardPai() {
           <h2 style={styles.welcomeTitle}>👨‍👩‍👧‍👦 Olá, Sr. Carlos</h2>
           <p style={styles.welcomeText}>Acompanhe o desenvolvimento dos seus filhos</p>
         </div>
-        <div style={styles.notificacoes}>
-          <Bell size={20} color="#6b7280" />
-          <span style={styles.notificacaoBadge}>4</span>
-        </div>
       </div>
 
       {/* Cards de Acesso Rápido - ATUALIZADO */}
       <div style={styles.quickAccess}>
         <button 
-          style={styles.quickAccessCard}
+          style={{...styles.quickAccessCard, backgroundColor: '#fef3c7'}}
           onClick={() => navigate('/pai/calendario')} // NOVO
         >
           <CalendarIcon size={24} color="#f59e0b" />
-          <div>
+          <div style={{ width: '100%'}}>
             <strong>Calendário Escolar</strong>
+            <br/>
             <span>Acompanhe as datas importantes</span>
           </div>
           <ChevronRight size={20} color="#9ca3af" />
@@ -89,8 +86,9 @@ export default function DashboardPai() {
           onClick={() => navigate('/pai/publicacoes')}
         >
           <FileText size={24} color="#3b82f6" />
-          <div>
+          <div style={{ width: '100%'}}>
             <strong>Acompanhar Publicações</strong>
+            <br/>
             <span>Veja o que os professores estão postando</span>
           </div>
           <ChevronRight size={20} color="#9ca3af" />
@@ -101,8 +99,9 @@ export default function DashboardPai() {
           onClick={() => navigate('/pai/atividades')}
         >
           <BookOpen size={24} color="#10b981" />
-          <div>
+          <div style={{ width: '100%'}}>
             <strong>Atividades Escolares</strong>
+            <br/>
             <span>Acompanhe tarefas e provas</span>
           </div>
           <ChevronRight size={20} color="#9ca3af" />
@@ -160,13 +159,6 @@ export default function DashboardPai() {
               </div>
               <div style={styles.filhoActions}>
                 <button 
-                  style={styles.acompanharBtn}
-                  onClick={() => navigate(`/pai/filho/${filho.id}`)}
-                >
-                  <Eye size={16} />
-                  Acompanhar
-                </button>
-                <button 
                   style={styles.publicacoesBtn}
                   onClick={() => navigate('/pai/publicacoes')}
                 >
@@ -185,6 +177,35 @@ export default function DashboardPai() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Avisos importantes */}
+      <div style={styles.avisosSection}>
+        <h3 style={styles.sectionTitle}>⚠️ Avisos importantes</h3>
+        <div style={styles.avisoCard}>
+          <AlertCircle size={20} color="#dc2626" />
+          <div style={styles.avisoContent}>
+            <strong>Reunião de pais - 6º Ano A</strong>
+            <p>Amanhã às 19h na sala do 6º Ano A</p>
+          </div>
+          <span style={styles.avisoData}>Há 1 dia</span>
+        </div>
+      </div>
+
+      {/* Banner de permissões */}
+      <div style={styles.permissaoBanner}>
+        <Eye size={20} />
+        <div>
+          <strong>Modo visualização ativo</strong>
+          <p style={styles.permissaoTexto}>Você pode acompanhar tudo, mas não pode entregar atividades ou comentar</p>
+        </div>
+      </div>
+
+      {/* Banner WhatsApp */}
+      <div style={styles.whatsappBanner}>
+        <Bell size={20} />
+        <span>📱 Você receberá notificações no WhatsApp sobre novas atividades e lembretes</span>
+        <button style={styles.ativarBtn}>Ativar notificações</button>
       </div>
 
       {/* NOVA SEÇÃO: Atividades Recentes */}
@@ -320,28 +341,6 @@ export default function DashboardPai() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Avisos importantes */}
-      <div style={styles.avisosSection}>
-        <h3 style={styles.sectionTitle}>⚠️ Avisos importantes</h3>
-        <div style={styles.avisoCard}>
-          <AlertCircle size={20} color="#dc2626" />
-          <div style={styles.avisoContent}>
-            <strong>Reunião de pais - 6º Ano A</strong>
-            <p>Amanhã às 19h na sala do 6º Ano A</p>
-          </div>
-          <span style={styles.avisoData}>Há 1 dia</span>
-        </div>
-      </div>
-
-      {/* Banner de permissões */}
-      <div style={styles.permissaoBanner}>
-        <Eye size={20} />
-        <div>
-          <strong>Modo visualização ativo</strong>
-          <p style={styles.permissaoTexto}>Você pode acompanhar tudo, mas não pode entregar atividades ou comentar</p>
         </div>
       </div>
 
@@ -534,18 +533,6 @@ const styles = {
     display: 'flex',
     gap: '8px'
   },
-  acompanharBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '5px',
-    padding: '8px 12px',
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    fontSize: '12px'
-  },
   publicacoesBtn: {
     display: 'flex',
     alignItems: 'center',
@@ -573,23 +560,10 @@ const styles = {
   atividadesSection: {
     marginBottom: '30px'
   },
-  sectionHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '15px'
-  },
   sectionTitle: {
     fontSize: '18px',
     margin: '0 0 15px',
     color: '#1f2937'
-  },
-  verTodosBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#3b82f6',
-    cursor: 'pointer',
-    fontSize: '14px'
   },
   atividadesList: {
     backgroundColor: 'white',
@@ -731,13 +705,35 @@ const styles = {
     padding: '15px 20px',
     backgroundColor: '#fef3c7',
     borderRadius: '12px',
-    color: '#92400e'
+    color: '#92400e',
+    marginBottom: '30px'
   },
   permissaoTexto: {
     margin: '5px 0 0',
     fontSize: '13px'
   },
+  whatsappBanner: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+    padding: '15px 20px',
+    backgroundColor: '#25D36620',
+    borderRadius: '12px',
+    color: '#075e54',
+    marginBottom: '40px'
+  },
+  ativarBtn: {
+    marginLeft: 'auto',
+    padding: '8px 20px',
+    backgroundColor: '#25D366',
+    color: 'white',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    fontSize: '12px'
+  },
   calendarioSection: {
+    marginTop: '40px',
     marginBottom: '30px'
   },
   sectionHeader: {

@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  BookOpen, Calendar, Award, Bell, TrendingUp, 
-  Star, Clock, CheckCircle, XCircle, Users,
+  Award, Bell, Clock, CheckCircle, XCircle, Users,
   ChevronRight, QrCode, Heart, MessageCircle, FileText,
   Calendar as CalendarIcon // Adicionar CalendarIcon
 } from 'lucide-react';
@@ -225,7 +224,7 @@ export default function DashboardAluno() {
             </div>
             <button 
               style={styles.verRankingBtn}
-              onClick={() => navigate('/aluno/turma/1')}
+              onClick={() => navigate('/aluno/ranking')}
             >
               Ver ranking completo
             </button>

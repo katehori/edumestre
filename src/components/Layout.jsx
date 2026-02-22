@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  GraduationCap, LogOut, Home, BookOpen, Users, Award, 
-  Bell, ChevronDown, FileText, Calendar, MessageSquare, 
-  QrCode, Settings, HelpCircle, User, Clock, Star
+  GraduationCap, LogOut, Home, Users, Award,
+  Bell, ChevronDown, FileText, Calendar,
+  User, Clock, Star
 } from 'lucide-react';
 
 export default function Layout({ children, perfil, nome, turmaInfo }) {
@@ -25,10 +25,7 @@ export default function Layout({ children, perfil, nome, turmaInfo }) {
                     { icon: <Users size={18} />, label: 'Comunidade', path: '/professor/comunidade' },
                     { icon: <Calendar size={18} />, label: 'Calendário', path: '/professor/calendario' },
                     { icon: <Clock size={18} />, label: 'Atividades', path: '/professor/atividades' },
-                    { icon: <MessageSquare size={18} />, label: 'WhatsApp', path: '/professor/whatsapp' },
-                    { icon: <QrCode size={18} />, label: 'QR Codes', path: '/professor/qrcode' },
                     { icon: <User size={18} />, label: 'Meu Perfil', path: '/professor/perfil' }, // NOVO
-                    { icon: <Settings size={18} />, label: 'Configurações', path: '/professor/configuracoes' },
                 ]
         };
         case 'aluno':
@@ -45,7 +42,6 @@ export default function Layout({ children, perfil, nome, turmaInfo }) {
                     { icon: <Award size={18} />, label: 'Ranking', path: '/aluno/ranking' },
                     { icon: <Star size={18} />, label: 'Conquistas', path: '/aluno/conquistas' },
                     { icon: <User size={18} />, label: 'Meu Perfil', path: '/aluno/perfil' }, // NOVO
-                    { icon: <Settings size={18} />, label: 'Configurações', path: '/aluno/configuracoes' },
                 ]
         };
         case 'pai':
@@ -55,13 +51,11 @@ export default function Layout({ children, perfil, nome, turmaInfo }) {
                 label: 'Responsável',
                 menuItems: [
                     { icon: <Home size={18} />, label: 'Dashboard', path: '/pai' },
-                    { icon: <Users size={18} />, label: 'Meus Filhos', path: '/pai/filhos' },
                     { icon: <FileText size={18} />, label: 'Publicações', path: '/pai/publicacoes' },
                     { icon: <Calendar size={18} />, label: 'Calendário', path: '/pai/calendario' },
                     { icon: <Clock size={18} />, label: 'Atividades', path: '/pai/atividades' },
                     { icon: <Award size={18} />, label: 'Desempenho', path: '/pai/desempenho' },
                     { icon: <User size={18} />, label: 'Meu Perfil', path: '/pai/perfil' }, // NOVO
-                    { icon: <Settings size={18} />, label: 'Configurações', path: '/pai/configuracoes' },
                 ]
         };
         default:
@@ -189,18 +183,7 @@ export default function Layout({ children, perfil, nome, turmaInfo }) {
                   {/* Linha divisória */}
                   <div style={styles.dropdownDivider} />
 
-                  {/* Ajuda e Sair */}
-                  <button 
-                    style={styles.dropdownItem}
-                    onClick={() => {
-                      navigate('/ajuda');
-                      setShowDropdown(false);
-                    }}
-                  >
-                    <HelpCircle size={18} style={styles.dropdownIcon} />
-                    Ajuda
-                  </button>
-                  
+                  {/* Sair */}
                   <button 
                     style={{...styles.dropdownItem, color: '#dc2626'}}
                     onClick={() => {

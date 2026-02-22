@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import AtividadeCard from '../../components/AtividadeCard';
 import { 
-  ArrowLeft, Search, Filter, Calendar,
+  ArrowLeft, Search, Calendar,
   Clock, CheckCircle, AlertCircle
 } from 'lucide-react';
 

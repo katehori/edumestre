@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  ArrowLeft, Calendar, Clock, FileText, Download,
-  Upload, CheckCircle, AlertCircle, Save, X
+  ArrowLeft, Calendar, Clock, FileText,
+  Upload, CheckCircle, Save, X
 } from 'lucide-react';
 
 export default function AtividadeDetalhes() {

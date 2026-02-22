@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import RankingCard from '../../components/RankingCard';
 import { 
-  ArrowLeft, Trophy, Award, Star, TrendingUp, 
-  Users, Medal, Filter, ChevronDown, Crown
+  ArrowLeft, Trophy, Award, Users, Crown
 } from 'lucide-react';
 
 export default function RankingAluno() {
@@ -40,7 +39,7 @@ export default function RankingAluno() {
     { id: 1, nome: 'Maria Souza', turma: '6º Ano A', pontos: 2450, media: 9.5, atividades: 15 },
     { id: 2, nome: 'Carlos Eduardo', turma: '9º Ano B', pontos: 2350, media: 9.2, atividades: 14 },
     { id: 3, nome: 'Juliana Costa', turma: '8º Ano A', pontos: 2100, media: 9.0, atividades: 14 },
-    { id: 4, nome: 'João Silva', turma: '6º Ano A', pontos: 1250, media: 8.5, atividades: 12 },
+    { id: 4, nome: 'João Silva', turma: '6º Ano A', pontos: 1250, media: 8.5, atividades: 12, isCurrentUser: true },
     { id: 5, nome: 'Pedro Lima', turma: '6º Ano A', pontos: 980, media: 7.8, atividades: 11 },
   ];
 
@@ -49,7 +48,7 @@ export default function RankingAluno() {
   // Estatísticas do aluno
   const stats = {
     posicaoTurma: rankingTurma.findIndex(a => a.isCurrentUser) + 1,
-    posicaoGeral: rankingGeral.findIndex(a => a.nome === 'João Silva') + 1,
+    posicaoGeral: rankingGeral.findIndex(a => a.isCurrentUser) + 1,
     totalTurma: rankingTurma.length,
     totalGeral: 120,
     pontos: alunoAtual.pontos,

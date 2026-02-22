@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import { 
-  ArrowLeft, BookOpen, Users, Calendar, Clock,
+  ArrowLeft, BookOpen, Calendar, Clock,
   FileText, Video, Link as LinkIcon, Download,
-  ChevronRight, CheckCircle, AlertCircle
+  ChevronRight, CheckCircle
 } from 'lucide-react';
 
 export default function TurmaDetalhesAluno() {
@@ -201,9 +201,6 @@ export default function TurmaDetalhesAluno() {
 
                     <div style={styles.publicacaoFooter}>
                       <span style={styles.publicacaoAutor}>Por {pub.autor}</span>
-                      <button style={styles.curtirBtn}>
-                        👍 Curtir
-                      </button>
                     </div>
                   </div>
                 ))}

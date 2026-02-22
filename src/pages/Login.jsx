@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Users, Heart, ChevronRight, LogIn, UserPlus } from 'lucide-react';
+import { GraduationCap, Users, Heart, LogIn, UserPlus } from 'lucide-react';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -133,11 +133,6 @@ export default function Login() {
               <UserPlus size={20} />
               Criar nova conta
             </button>
-          </div>
-
-          <div style={styles.demoInfo}>
-            <span style={styles.demoBadge}>🔍 DEMO</span>
-            <p style={styles.demoText}>Use qualquer email/senha para testar</p>
           </div>
         </div>
       </main>
@@ -311,29 +306,6 @@ const styles = {
     justifyContent: 'center',
     gap: '10px',
     transition: 'all 0.3s'
-  },
-  demoInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '10px',
-    padding: '12px',
-    backgroundColor: '#fef3c7',
-    borderRadius: '8px',
-    marginTop: '20px'
-  },
-  demoBadge: {
-    backgroundColor: '#f59e0b',
-    color: 'white',
-    padding: '4px 8px',
-    borderRadius: '4px',
-    fontSize: '11px',
-    fontWeight: 'bold'
-  },
-  demoText: {
-    color: '#92400e',
-    margin: 0,
-    fontSize: '13px'
   },
   footer: {
     textAlign: 'center',

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PublicacaoCard from '../../components/PublicacaoCard';
 import { 
-  ArrowLeft, Search, Filter, Eye,
+  ArrowLeft, Search, Eye,
   Users, BookOpen, Calendar
 } from 'lucide-react';
 
@@ -157,28 +157,6 @@ export default function PublicacoesPai() {
           </div>
         </div>
 
-        {/* Lista de Publicações */}
-        <div style={styles.publicacoesList}>
-          {filtrarPublicacoes.map(publicacao => (
-            <div key={publicacao.id} style={styles.publicacaoWrapper}>
-              <div style={styles.alunoTag}>
-                <Users size={12} />
-                <span>{publicacao.aluno}</span>
-              </div>
-              <PublicacaoCard
-                publicacao={publicacao}
-                perfil="pai"
-              />
-            </div>
-          ))}
-
-          {filtrarPublicacoes.length === 0 && (
-            <div style={styles.emptyState}>
-              <p>Nenhuma publicação encontrada</p>
-            </div>
-          )}
-        </div>
-
         {/* Resumo por filho */}
         <div style={styles.resumoSection}>
           <h3 style={styles.resumoTitle}>📊 Resumo por Filho</h3>
@@ -201,7 +179,7 @@ export default function PublicacoesPai() {
                     </strong>
                   </div>
                 </div>
-                <button 
+                <button
                   style={styles.verPublicacoesBtn}
                   onClick={() => setFilterFilho(filho.nome)}
                 >
@@ -210,6 +188,28 @@ export default function PublicacoesPai() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Lista de Publicações */}
+        <div style={styles.publicacoesList}>
+          {filtrarPublicacoes.map(publicacao => (
+            <div key={publicacao.id} style={styles.publicacaoWrapper}>
+              <div style={styles.alunoTag}>
+                <Users size={12} />
+                <span>{publicacao.aluno}</span>
+              </div>
+              <PublicacaoCard
+                publicacao={publicacao}
+                perfil="pai"
+              />
+            </div>
+          ))}
+
+          {filtrarPublicacoes.length === 0 && (
+            <div style={styles.emptyState}>
+              <p>Nenhuma publicação encontrada</p>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
@@ -350,6 +350,7 @@ const styles = {
     backgroundColor: 'white',
     borderRadius: '12px',
     padding: '20px',
+    marginBottom: '40px',
     boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
   },
   resumoTitle: {
